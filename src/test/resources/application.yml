@@ -1,3 +1,5 @@
 spring:
   application:
-    name: Akdemia DBHStudios
+    name: "Akdemia DBHStudios"
+    protocol: "http"
+    url: "localhost"

@@ -16,4 +16,10 @@ public class PageController {
 
     @GetMapping("/logout")
     public String logout() { return "logout"; }
+
+    @GetMapping("/blog")
+    public String blog(){
+        return "blog";
+    }
+
 }

@@ -12,25 +12,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SecurityControllerTest {
+public class SecurityControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
 
-
     @Test
-    void indexWhenUnAuthenticatedThenRedirect() throws Exception {
+    void blogWhenUnAuthenticatedThenRedirect() throws Exception {
         // @formatter:off
-        this.mockMvc.perform(get("/"))
-                .andExpect(status().isUnauthorized());
+        this.mockMvc.perform(get("/blog"))
+                .andExpect(status().is3xxRedirection());
         // @formatter:on
     }
 
     @Test
     @WithMockUser
-    void indexWhenAuthenticatedThenOk() throws Exception {
+    void blogWhenAuthenticatedThenOk() throws Exception {
         // @formatter:off
-        this.mockMvc.perform(get("/"))
+        this.mockMvc.perform(get("/blog"))
                 .andExpect(status().isOk());
         // @formatter:on
     }

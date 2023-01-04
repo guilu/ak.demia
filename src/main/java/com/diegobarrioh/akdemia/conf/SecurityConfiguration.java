@@ -10,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @EnableWebSecurity
 @Log4j2
@@ -24,18 +22,16 @@ public class SecurityConfiguration {
         // @formatter:off
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/","/login","/logout").permitAll()
+                        .requestMatchers("/").permitAll()
                         .anyRequest().authenticated()
                 )
-                .httpBasic(withDefaults())
                 .formLogin(form -> form
                         .loginPage("/login")
                         .permitAll()
                 )
-                .logout( logout -> logout
-                        .logoutUrl("/logout")
+                .logout(logout -> logout
+                        .permitAll()
                         .logoutSuccessUrl("/?logout")
-                        .invalidateHttpSession(true)
                 );
         // @formatter:on
         return http.build();
