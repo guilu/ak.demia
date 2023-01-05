@@ -1,5 +1,11 @@
 spring:
   application:
     name: "Akdemia DBHStudios"
-    protocol: "http"
-    url: "localhost"
+    url: "http://localhost"
+
+  datasource:
+    url: 'jdbc:h2:mem:BDD_AKDMIA;INIT=CREATE SCHEMA IF NOT EXISTS BDD_AKDMIA;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE'
+    username: 'sa'
+    password:
+
+browser: "chrome"
