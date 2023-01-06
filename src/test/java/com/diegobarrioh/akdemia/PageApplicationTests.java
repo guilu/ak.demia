@@ -35,9 +35,10 @@ public class PageApplicationTests {
     void performLogin() {
         indexPage.navigate(appUrl + ":" + randomPort);
         System.out.println("navigated to " + appUrl + ":" + randomPort);
-        LoginPage loginPage = indexPage.ClickLogin();
+        indexPage.ClickLogin();
         System.out.println("clicked on login");
-        loginPage.login("user","password");
+
+        loginPage.login("user", "password");
     }
 
 
