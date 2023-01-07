@@ -3,14 +3,10 @@ package com.diegobarrioh.akdemia.pages;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class IndexPage extends BasePage {
-
-    @Value("${spring.application.url}")
-    private String baseUrl;
 
     @Autowired
     private LoginPage loginPage;
@@ -18,7 +14,8 @@ public class IndexPage extends BasePage {
     @FindBy(id = "login")
     private WebElement lnkLogin;
 
-    public IndexPage goToIndexPage() {
+    public IndexPage goToIndexPage(String baseUrl) {
+        System.out.println("BASE_URL:"+baseUrl);
         driver.get(baseUrl);
         return this;
     }

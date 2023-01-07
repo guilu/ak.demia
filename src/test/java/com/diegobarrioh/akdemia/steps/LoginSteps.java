@@ -5,10 +5,14 @@ import com.diegobarrioh.akdemia.pages.LoginPage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.h2.index.Index;
+import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 
+@CucumberContextConfiguration
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LoginSteps {
 
     @Autowired
@@ -17,10 +21,16 @@ public class LoginSteps {
     @Autowired
     private LoginPage loginPage;
 
+    @LocalServerPort
+    private int port;
+
+    @Value("${spring.application.url}")
+    private String baseUrl;
+
     @Given("I am on the login page")
     public LoginSteps iAmOnTheLoginPage() {
         indexPage
-                .goToIndexPage()
+                .goToIndexPage(baseUrl+":"+port)
                 .goToLoginPage();
         return this;
     }

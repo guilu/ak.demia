@@ -22,16 +22,18 @@ public class LoginPage extends BasePage {
     private WebElement error;
 
     public LoginPage login(String username, String password) {
-        System.out.println("Sending keys " + this.username);
+        System.out.println("Sending keys " + username + " and " + password);
         this.username.sendKeys(username);
         this.password.sendKeys(password);
         this.submit.click();
+        System.out.println("clicked");
         return this;
     }
 
 
     public LoginPage verifyPasswordErrorMessage(String expectedText) {
         assertThat(error.getText()).isEqualTo(expectedText);
+        System.out.println("Assert that ");
         return this;
     }
 
