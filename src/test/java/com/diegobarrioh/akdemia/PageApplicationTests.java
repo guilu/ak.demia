@@ -6,10 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class PageApplicationTests {
 
     @Autowired
@@ -20,27 +19,35 @@ public class PageApplicationTests {
     @Value("${spring.application.url}")
     private String appUrl;
 
-    @LocalServerPort
-    private String randomPort;
-
     @Test
     @DirtiesContext
     void navigateToIndex() {
-        indexPage.navigate(appUrl + ":" + randomPort);
-        System.out.println("navigated to " + appUrl + ":" + randomPort);
+        System.out.println("navigated to"+appUrl);
+        indexPage.goToIndexPage();
+     }
+
+    @Test
+    @DirtiesContext
+    void goToLoginPage() {
+        indexPage.goToIndexPage()
+                .goToLoginPage();
     }
 
     @Test
     @DirtiesContext
     void performLogin() {
-        indexPage.navigate(appUrl + ":" + randomPort);
-        System.out.println("navigated to " + appUrl + ":" + randomPort);
-        indexPage.ClickLogin();
-        System.out.println("clicked on login");
-
-        loginPage.login("user", "password");
+        indexPage.goToIndexPage().goToLoginPage();
+        loginPage.login("user","password");
     }
 
+    @Test
+    @DirtiesContext
+    void errorPerformingLogin() {
+        indexPage.goToIndexPage().goToLoginPage();
+        loginPage
+                .login("usuario","password")
+                .verifyPasswordErrorMessage("Invalid username and password.");
+    }
 
 }
 

@@ -2,28 +2,30 @@ package com.diegobarrioh.akdemia.pages;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.time.Duration;
 
 @Component
 public class IndexPage extends BasePage {
-    @FindBy(id = "blog_link")
+
+    @Value("${spring.application.url}")
+    private String baseUrl;
+
+    @Autowired
+    private LoginPage loginPage;
+
+    @FindBy(id = "login")
     private WebElement lnkLogin;
 
-    public LoginPage ClickLogin() {
+    public IndexPage goToIndexPage() {
+        driver.get(baseUrl);
+        return this;
+    }
+
+    public IndexPage goToLoginPage() {
         lnkLogin.click();
-        System.out.println("Click Login");
-        return new LoginPage();
+        return this;
     }
 
-    @Override
-    public void verifyPageLoaded() {
-        waitTillElementIsReady(lnkLogin, Duration.ofSeconds(5));
-    }
-
-    @Override
-    protected String getPath() {
-        return "/login";
-    }
 }

@@ -4,7 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.springframework.stereotype.Component;
 
-import java.time.Duration;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Component
 public class LoginPage extends BasePage {
@@ -18,22 +18,21 @@ public class LoginPage extends BasePage {
     @FindBy(css = "input[type=submit]")
     private WebElement submit;
 
+    @FindBy(id = "error")
+    private WebElement error;
 
-    public void login(String username, String password) {
+    public LoginPage login(String username, String password) {
         System.out.println("Sending keys " + this.username);
         this.username.sendKeys(username);
         this.password.sendKeys(password);
         this.submit.click();
+        return this;
     }
 
-    @Override
-    public void verifyPageLoaded() {
-        System.out.println("esperando a ver " + this.submit);
-        waitTillElementIsReady(this.username, Duration.ofSeconds(5));
+
+    public LoginPage verifyPasswordErrorMessage(String expectedText) {
+        assertThat(error.getText()).isEqualTo(expectedText);
+        return this;
     }
 
-    @Override
-    protected String getPath() {
-        return "/login";
-    }
 }
