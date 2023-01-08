@@ -1,4 +1,4 @@
-package com.diegobarrioh.akdemia.controller;
+package com.diegobarrioh.akdemia;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

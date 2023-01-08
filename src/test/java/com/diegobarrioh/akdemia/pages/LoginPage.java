@@ -33,8 +33,11 @@ public class LoginPage extends BasePage {
 
     public LoginPage verifyPasswordErrorMessage(String expectedText) {
         assertThat(error.getText()).isEqualTo(expectedText);
-        System.out.println("Assert that ");
         return this;
     }
 
+    @Override
+    public void isAt() {
+        assertThat(this.driver.getTitle()).isEqualTo("Please Log In");
+    }
 }

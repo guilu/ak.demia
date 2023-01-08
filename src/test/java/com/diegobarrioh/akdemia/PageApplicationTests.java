@@ -42,6 +42,7 @@ public class PageApplicationTests {
     void performLogin() {
         indexPage.goToIndexPage(baseUrl+":"+port).goToLoginPage();
         loginPage.login("user","password");
+        indexPage.iAmLogged();
     }
 
     @Test

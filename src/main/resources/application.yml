@@ -9,3 +9,5 @@ spring:
     password:
 
 browser: "chrome"
+screenshot:
+  path: "target/"
