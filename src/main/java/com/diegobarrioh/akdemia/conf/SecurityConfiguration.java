@@ -22,7 +22,7 @@ public class SecurityConfiguration {
         // @formatter:off
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/","/register","/user/register").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

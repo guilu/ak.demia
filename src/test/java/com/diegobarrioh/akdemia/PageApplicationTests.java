@@ -2,6 +2,7 @@ package com.diegobarrioh.akdemia;
 
 import com.diegobarrioh.akdemia.pages.IndexPage;
 import com.diegobarrioh.akdemia.pages.LoginPage;
+import com.diegobarrioh.akdemia.pages.LogoutPage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +18,9 @@ public class PageApplicationTests {
     @Autowired
     private LoginPage loginPage;
 
+    @Autowired
+    private LogoutPage logoutPage;
+
     @LocalServerPort
     private int port;
 
@@ -26,21 +30,20 @@ public class PageApplicationTests {
     @Test
     @DirtiesContext
     void navigateToIndex() {
-        System.out.println("navigated to"+baseUrl+":"+port);
-        indexPage.goToIndexPage(baseUrl+":"+port);
+        indexPage.goToIndexPage(url());
      }
 
     @Test
     @DirtiesContext
     void goToLoginPage() {
-        indexPage.goToIndexPage(baseUrl+":"+port)
+        indexPage.goToIndexPage(url())
                 .goToLoginPage();
     }
 
     @Test
     @DirtiesContext
     void performLogin() {
-        indexPage.goToIndexPage(baseUrl+":"+port).goToLoginPage();
+        indexPage.goToIndexPage(url()).goToLoginPage();
         loginPage.login("user","password");
         indexPage.iAmLogged();
     }
@@ -48,10 +51,24 @@ public class PageApplicationTests {
     @Test
     @DirtiesContext
     void errorPerformingLogin() {
-        indexPage.goToIndexPage(baseUrl+":"+port).goToLoginPage();
+        indexPage.goToIndexPage(url()).goToLoginPage();
         loginPage
                 .login("usuario","password")
                 .verifyPasswordErrorMessage("Invalid username and password.");
+    }
+
+    @Test
+    @DirtiesContext
+    void performLogout() {
+        indexPage.goToIndexPage(url()).goToLoginPage();
+        loginPage.login("user","password");
+        indexPage.gotToLogoutPage();
+        logoutPage.confirmLogout();
+        indexPage.iJustLoggedOut();
+    }
+
+    private String url(){
+        return this.baseUrl+":"+this.port;
     }
 
 }

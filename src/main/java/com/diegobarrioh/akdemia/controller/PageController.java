@@ -12,10 +12,13 @@ public class PageController {
     }
 
     @GetMapping("/login")
-    public String login() { return "login"; }
+    public String login() { return "/user/login"; }
+
+    @GetMapping("/register")
+    public String register() { return "/user/register"; }
 
     @GetMapping("/logout")
-    public String logout() { return "logout"; }
+    public String logout() { return "/user/logout"; }
 
     @GetMapping("/blog")
     public String blog(){

@@ -6,21 +6,32 @@
 </head>
 <body>
 <h1>Akdemia dbhstudios</h1>
-<h2>Landing Page</h2>
+<h2>Inicio</h2>
 
-<div th:if="${param.logout}">
+<div th:if="${param.logout}" th:id="logout_msg">
   You have been logged out.
 </div>
 
+<div>
+  <ul>
+    <li><a th:href="@{/}" th:id="home_link">Inicio</a></li>
+    <li><a th:href="@{/blog}" th:id="blog_link">Blog</a></li>
+    <li>
+      <div sec:authorize="!isAuthenticated()">
+        <a th:href="@{/login}" th:id="login">Log In</a>
+      </div>
+      <div sec:authorize="isAuthenticated()">
+        <div th:inline="text">
+          <span th:remove="tag" sec:authentication="name">#usuario</span> | <a th:href="@{/logout}" th:id="logout">log out</a>
+        </div>
+      </div>
+    </li>
+    <li>
+      <a th:href="@{/register}" th:id="register">register</a>
+    </li>
+  </ul>
+</div>
 
-<div><a th:href="@{/blog}" th:id="blog_link">Blog</a></div>
-<div sec:authorize="!isAuthenticated()">
-  <a th:href="@{/login}" th:id="login">Log In</a>
-</div>
-<div sec:authorize="isAuthenticated()">
-  <div th:inline="text">Hola <span th:remove="tag" sec:authentication="name">#usuario</span>!</div>
-  <a th:href="@{/logout}" th:id="logout">Log Out</a>
-</div>
 
 </body>
 </html>
