@@ -24,5 +24,4 @@ public class UserController {
         log.info("userDto:"+userDto.toString());
         return new ResponseEntity<JsonResponse>(new JsonResponse(true,"/",0,"registration success!!"), HttpStatus.OK);
     }
-
 }

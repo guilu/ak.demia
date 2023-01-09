@@ -22,7 +22,7 @@ public class SecurityConfiguration {
         // @formatter:off
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/","/register","/user/register").permitAll()
+                        .requestMatchers("/","/register","/user/register","/h2-console/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -33,6 +33,9 @@ public class SecurityConfiguration {
                         .permitAll()
                         .logoutSuccessUrl("/?logout")
                 );
+        http.csrf().ignoringRequestMatchers("/h2-console/**");
+        http.headers().frameOptions().disable();
+
         // @formatter:on
         return http.build();
     }
