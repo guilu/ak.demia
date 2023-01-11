@@ -4,9 +4,12 @@
   <title>Log In</title>
 </head>
 <body>
-<h1>Please Log In</h1>
-<div th:if="${param.error}" th:id="error">
-  Invalid username and password.</div>
+<h1 th:text="#{login.title}">Please Log In</h1>
+
+<div th:if="${param.error}" th:id="error" th:text="#{login.error}">
+  Invalid username and password.
+</div>
+
 <form th:action="@{/login}" method="post">
   <div>
     <input type="text" name="username" placeholder="Username"/>

@@ -5,32 +5,44 @@
   <title>Akdemia dbhstudios</title>
 </head>
 <body>
-<h1>Akdemia dbhstudios</h1>
-<h2>Inicio</h2>
+<h1 th:text="#{index.title}">Akdemia dbhstudios</h1>
+<h2 th:text="#{menu.home}">Inicio</h2>
 
-<div th:if="${param.logout}" th:id="logout_msg">
+<div th:if="${param.logout}" th:id="logout_msg" th:text="#{msg.logout}">
   You have been logged out.
 </div>
 
 <div>
   <ul>
-    <li><a th:href="@{/}" th:id="home_link">Inicio</a></li>
-    <li><a th:href="@{/blog}" th:id="blog_link">Blog</a></li>
+    <li><a th:href="@{/}" th:id="home_link" th:text="#{menu.home}">Inicio</a></li>
+    <li><a th:href="@{/blog}" th:id="blog_link" th:text="#{menu.blog}">Blog</a></li>
     <li>
       <div sec:authorize="!isAuthenticated()">
-        <a th:href="@{/login}" th:id="login">Log In</a>
+        <a th:href="@{/login}" th:id="login" th:text="#{menu.login}">Login</a>
       </div>
       <div sec:authorize="isAuthenticated()">
         <div th:inline="text">
-          <span th:remove="tag" sec:authentication="name">#usuario</span> | <a th:href="@{/logout}" th:id="logout">log out</a>
+          <span th:remove="tag" sec:authentication="name">#usuario</span> | <a th:href="@{/logout}" th:id="logout" th:text="#{menu.logout}">log out</a>
         </div>
       </div>
     </li>
     <li>
-      <a th:href="@{/register}" th:id="register">register</a>
+      <a th:href="@{/register}" th:id="register" th:text="#{menu.register}">register</a>
     </li>
   </ul>
 </div>
+
+<label for="locales" th:text="#{lang.change}"></label>
+
+<form action="" method="get">
+  <select th:id="locales" id="locales" th:name="lang">
+    <option value=""></option>
+    <option value="en" th:text="#{lang.en}">Inglés</option>
+    <option value="es" th:text="#{lang.es}">Español</option>
+  </select>
+  <input type="submit" value="cambiar">
+</form>
+
 
 
 </body>

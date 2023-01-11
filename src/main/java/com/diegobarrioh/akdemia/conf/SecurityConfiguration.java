@@ -49,8 +49,4 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder(11);
     }
 
-    // @formatter:off
-
-    // @formatter:on
-
 }
