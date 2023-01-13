@@ -4,15 +4,17 @@ import com.diegobarrioh.akdemia.domain.DomainModelNames;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Collection;
 
+@Entity
+@Table(name = DomainModelNames.TB00_PRIVILEGE, schema = DomainModelNames.SCHEMA)
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@Entity
-@Table(name = DomainModelNames.TB00_PRIVILEGE)
+@ToString
 public class Privilege extends BaseEntity {
     /**
      * The name.
@@ -23,5 +25,8 @@ public class Privilege extends BaseEntity {
      * The roles.
      */
     @ManyToMany(mappedBy = "privileges")
+    @ToString.Exclude
     private Collection<Role> roles;
+
+
 }

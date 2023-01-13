@@ -16,7 +16,7 @@ import java.util.Objects;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = DomainModelNames.TB00_USER)
+@Table(name = DomainModelNames.TB00_USER, schema = DomainModelNames.SCHEMA)
 public class User extends BaseEntity {
     /**
      * The first name.
@@ -73,6 +73,7 @@ public class User extends BaseEntity {
      */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = DomainModelNames.TB00_USER_ROLE,
+            schema = DomainModelNames.SCHEMA,
             joinColumns = @JoinColumn(name = "ID_USER", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "ID_ROLE", referencedColumnName = "id"))
     private Collection<Role> roles;
