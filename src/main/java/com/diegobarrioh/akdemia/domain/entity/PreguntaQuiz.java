@@ -29,5 +29,4 @@ public class PreguntaQuiz extends BaseEntity {
 
     private boolean acertada;
 
-
 }
