@@ -3,9 +3,9 @@ package com.diegobarrioh.akdemia.domain.entity;
 import com.diegobarrioh.akdemia.domain.DomainModelNames;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.List;
 

@@ -6,9 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = DomainModelNames.TB02_TEMA, schema = DomainModelNames.SCHEMA)
