@@ -10,6 +10,20 @@ spring:
 
   messages:
     basename: "i18n/messages"
+  jpa:
+    generate-ddl: true #change to false in production mode
+    hibernate:
+      ddl-auto: create-drop #change to validate in production mode
+    show-sql: true
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        default_schema: 'BDD_AKDMVM'
+        dialect: org.hibernate.dialect.H2Dialect
+  sql:
+    init:
+      platform: h2
+
 
 browser: "chrome"
 screenshot:
