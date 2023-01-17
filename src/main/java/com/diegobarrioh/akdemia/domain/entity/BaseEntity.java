@@ -6,12 +6,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 @MappedSuperclass
 public class BaseEntity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1234L;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +22,9 @@ public class BaseEntity implements Serializable {
     private Long id;
 
     /**
-     * public constructor to avoid
+     * public constructor to avoid ioc errors
      */
     public BaseEntity() {
-        //PUBLIC CONSTRUCTIOR TO AVOID
     }
 
     public static long getSerialVersionUID() {

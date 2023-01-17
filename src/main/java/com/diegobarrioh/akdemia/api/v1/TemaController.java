@@ -1,5 +1,6 @@
 package com.diegobarrioh.akdemia.api.v1;
 
+import com.diegobarrioh.akdemia.api.ApiRequestMappings;
 import com.diegobarrioh.akdemia.domain.entity.Tema;
 import com.diegobarrioh.akdemia.domain.repository.TemaRepository;
 import com.diegobarrioh.akdemia.ex.EntityNotFoundException;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "api/v1", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = ApiRequestMappings.API_V1, produces = MediaType.APPLICATION_JSON_VALUE)
 public class TemaController {
 
     private final TemaRepository temaRepository;

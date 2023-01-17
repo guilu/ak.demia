@@ -2,12 +2,11 @@ package com.diegobarrioh.akdemia.domain.entity;
 
 import com.diegobarrioh.akdemia.domain.DomainModelNames;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+
+import java.util.List;
 
 
 @Entity
@@ -28,6 +27,9 @@ public class Tema extends BaseEntity {
     @JoinColumn(name = "AGRUPACION_ID", referencedColumnName = "ID")
     @JsonIgnore
     private Agrupacion agrupacion;
+
+    @OneToMany(mappedBy = "tema", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Pregunta> preguntas;
 
 
 }
