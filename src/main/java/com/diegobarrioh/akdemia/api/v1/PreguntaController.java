@@ -29,7 +29,7 @@ public class PreguntaController {
 
     @GetMapping("/preguntas/{id}")
     public Pregunta pregunta(@PathVariable("id") Long id) {
-        return preguntaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("/preguntas/"+id,"Pregunta"));
+        return preguntaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("pregunta",id));
     }
 
 }

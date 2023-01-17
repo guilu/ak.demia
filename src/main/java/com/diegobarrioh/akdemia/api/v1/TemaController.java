@@ -28,7 +28,7 @@ public class TemaController {
 
     @GetMapping("/temas/{id}")
     public Tema tema(@PathVariable("id") Long id) {
-        return temaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("/temas/"+id,"Tema"));
+        return temaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("tema", id));
     }
 
 }

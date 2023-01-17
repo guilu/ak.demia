@@ -1,8 +1,8 @@
 
 insert into BDD_AKDEMIA.TB00_USER(first_name,last_name,email,password,enabled,locked) VALUES
-    ('Diego','B H','user@gmail.com','',true,false);
+    ('Diego','B H','user@gmail.com','$2a$11$mHnuXEyBNkMw7IOVmgH99OOj0uTNw2e9qP7Gf3H91u7jGK1CMOkc.',true,false);
 insert into BDD_AKDEMIA.TB00_USER(first_name,last_name,email,password,enabled,locked) VALUES
-    ('Diego','B H','admin@gmail.com','',true,false);
+    ('Diego','B H','admin@gmail.com','$2a$11$mHnuXEyBNkMw7IOVmgH99OOj0uTNw2e9qP7Gf3H91u7jGK1CMOkc.',true,false);
 
 
 insert into BDD_AKDEMIA.TB00_ROLE(NAME) VALUES ('ROLE_USER');
