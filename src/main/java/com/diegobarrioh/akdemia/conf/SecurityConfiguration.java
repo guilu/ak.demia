@@ -21,7 +21,7 @@ public class SecurityConfiguration {
         // @formatter:off
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/","/register","/user/register","/h2-console/**").permitAll()
+                        .requestMatchers("/","/register","/user/register","/h2-console/**","/api/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
