@@ -5,10 +5,7 @@ import com.diegobarrioh.akdemia.domain.entity.Tema;
 import com.diegobarrioh.akdemia.domain.repository.TemaRepository;
 import com.diegobarrioh.akdemia.ex.EntityNotFoundException;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,9 +24,32 @@ public class TemaController {
         return temaRepository.findAll();
     }
 
+    @PostMapping("/temas")
+    Tema newTema(@RequestBody Tema tema) {
+        return temaRepository.save(tema);
+    }
+
     @GetMapping("/temas/{id}")
     public Tema tema(@PathVariable("id") Long id) {
         return temaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("tema", id));
+    }
+
+    @PutMapping("/temas/{id}")
+    Tema replaceTema(@RequestBody Tema newTema, @PathVariable Long id) {
+        return temaRepository.findById(id)
+                .map(tema -> {
+                            tema.setTexto(newTema.getTexto());
+                            return temaRepository.save(tema);
+                        })
+                .orElseGet(() -> {
+                            newTema.setId(id);
+                            return temaRepository.save(newTema);
+                        });
+    }
+
+    @DeleteMapping("/temas/{id}")
+    void deleteTema(@PathVariable Long id) {
+        temaRepository.deleteById(id);
     }
 
 }

@@ -5,10 +5,7 @@ import com.diegobarrioh.akdemia.domain.entity.Pregunta;
 import com.diegobarrioh.akdemia.domain.repository.PreguntaRepository;
 import com.diegobarrioh.akdemia.ex.EntityNotFoundException;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,10 +24,32 @@ public class PreguntaController {
         return preguntaRepository.findAll();
     }
 
+    @PostMapping("/preguntas")
+    Pregunta newPregunta(@RequestBody Pregunta pregunta) {
+        return preguntaRepository.save(pregunta);
+    }
 
     @GetMapping("/preguntas/{id}")
     public Pregunta pregunta(@PathVariable("id") Long id) {
         return preguntaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("pregunta",id));
+    }
+
+    @PutMapping("/preguntas/{id}")
+    Pregunta replacePregunta(@RequestBody Pregunta newPregunta, @PathVariable Long id) {
+        return preguntaRepository.findById(id)
+                .map(pregunta -> {
+                    pregunta.setTexto(newPregunta.getTexto());
+                    return preguntaRepository.save(pregunta);
+                })
+                .orElseGet(() -> {
+                    newPregunta.setId(id);
+                    return preguntaRepository.save(newPregunta);
+                });
+    }
+
+    @DeleteMapping("/preguntas/{id}")
+    void deletePregunta(@PathVariable Long id) {
+        preguntaRepository.deleteById(id);
     }
 
 }
