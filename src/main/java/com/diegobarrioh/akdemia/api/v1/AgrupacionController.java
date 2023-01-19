@@ -6,7 +6,9 @@ import com.diegobarrioh.akdemia.domain.repository.AgrupacionRepository;
 import com.diegobarrioh.akdemia.ex.EntityNotFoundException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,8 +55,8 @@ public class AgrupacionController {
     }
 
     @PutMapping("/agrupaciones/{id}")
-    Agrupacion replaceAgrupacion(@RequestBody Agrupacion newAgrupacion, @PathVariable Long id) {
-        return agrupacionRepository.findById(id)
+    ResponseEntity<?> replaceAgrupacion(@RequestBody Agrupacion newAgrupacion, @PathVariable Long id) {
+        Agrupacion updatedAgrupacion =  agrupacionRepository.findById(id)
                 .map( agrupacion -> {
                     agrupacion.setTexto(newAgrupacion.getTexto());
                     return agrupacionRepository.save(agrupacion);
@@ -63,11 +65,17 @@ public class AgrupacionController {
                     newAgrupacion.setId(id);
                     return agrupacionRepository.save(newAgrupacion);
                 });
+        EntityModel<Agrupacion> entityModel = assembler.toModel(updatedAgrupacion);
+
+        return ResponseEntity
+                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .body(entityModel);
     }
 
     @DeleteMapping("/agrupaciones/{id}")
-    void deleteAgrupacion(@PathVariable Long id) {
+    ResponseEntity<?> deleteAgrupacion(@PathVariable Long id) {
         agrupacionRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
