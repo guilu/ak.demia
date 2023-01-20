@@ -1,7 +1,6 @@
 package com.diegobarrioh.akdemia.api.v1;
 
 import com.diegobarrioh.akdemia.api.ApiRequestMappings;
-import com.diegobarrioh.akdemia.domain.entity.Pregunta;
 import com.diegobarrioh.akdemia.domain.entity.Respuesta;
 import com.diegobarrioh.akdemia.domain.repository.RespuestaRepository;
 import com.diegobarrioh.akdemia.ex.EntityNotFoundException;
