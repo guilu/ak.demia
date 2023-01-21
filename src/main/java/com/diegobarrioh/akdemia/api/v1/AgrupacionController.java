@@ -44,8 +44,14 @@ public class AgrupacionController {
     // end::get-aggregate-root[]
 
     @PostMapping("/agrupaciones")
-    Agrupacion newAgrupacion(@RequestBody Agrupacion agrupacion) {
-        return agrupacionRepository.save(agrupacion);
+    ResponseEntity<?> newAgrupacion(@RequestBody Agrupacion agrupacion) {
+
+        EntityModel<Agrupacion> agrupacionEntityModel = assembler.toModel(agrupacionRepository.save(agrupacion));
+
+        return ResponseEntity.created(agrupacionEntityModel
+                .getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .body(agrupacionEntityModel);
+
     }
 
     @GetMapping(value = "/agrupaciones/{id}")
@@ -65,11 +71,11 @@ public class AgrupacionController {
                     newAgrupacion.setId(id);
                     return agrupacionRepository.save(newAgrupacion);
                 });
-        EntityModel<Agrupacion> entityModel = assembler.toModel(updatedAgrupacion);
+        EntityModel<Agrupacion> agrupacionEntityModel = assembler.toModel(updatedAgrupacion);
 
         return ResponseEntity
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-                .body(entityModel);
+                .created(agrupacionEntityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .body(agrupacionEntityModel);
     }
 
     @DeleteMapping("/agrupaciones/{id}")

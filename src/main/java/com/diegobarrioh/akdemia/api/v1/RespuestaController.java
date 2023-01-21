@@ -4,10 +4,18 @@ import com.diegobarrioh.akdemia.api.ApiRequestMappings;
 import com.diegobarrioh.akdemia.domain.entity.Respuesta;
 import com.diegobarrioh.akdemia.domain.repository.RespuestaRepository;
 import com.diegobarrioh.akdemia.ex.EntityNotFoundException;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(value = ApiRequestMappings.API_V1, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -15,28 +23,43 @@ public class RespuestaController {
 
     private final RespuestaRepository respuestaRepository;
 
-    public RespuestaController(RespuestaRepository respuestaRepository) {
+    private final RespuestaModelAssembler assembler;
+
+    public RespuestaController(RespuestaRepository respuestaRepository, RespuestaModelAssembler assembler) {
         this.respuestaRepository = respuestaRepository;
+        this.assembler = assembler;
     }
 
     @GetMapping("/respuestas")
-    public List<Respuesta> respuestas() {
-        return respuestaRepository.findAll();
+    public CollectionModel<EntityModel<Respuesta>> respuestas() {
+
+        List<EntityModel<Respuesta>> respuestas = respuestaRepository.findAll().stream()
+                .map(assembler::toModel)
+                .toList();
+
+        return CollectionModel.of( respuestas,
+                linkTo(methodOn(RespuestaController.class).respuestas()).withSelfRel());
     }
 
     @PostMapping("/respuestas")
-    Respuesta newRespuesta(@RequestBody Respuesta respuesta) {
-        return respuestaRepository.save(respuesta);
+    ResponseEntity<?> newRespuesta(@RequestBody Respuesta respuesta) {
+
+        EntityModel<Respuesta> respuestaEntityModel = assembler.toModel(respuestaRepository.save(respuesta));
+
+        return ResponseEntity.created(
+                respuestaEntityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .body(respuestaEntityModel);
     }
 
     @GetMapping("/respuestas/{id}")
-    public Respuesta respuesta(@PathVariable("id") Long id) {
-        return  respuestaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("respuesta",id));
+    public EntityModel<Respuesta> respuesta(@PathVariable("id") Long id) {
+        Respuesta respuesta = respuestaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("respuesta",id));
+        return assembler.toModel(respuesta);
     }
 
     @PutMapping("/respuestas/{id}")
-    Respuesta replaceRespuesta(@RequestBody Respuesta newRespuesta, @PathVariable Long id) {
-        return respuestaRepository.findById(id)
+    ResponseEntity<?> replaceRespuesta(@RequestBody Respuesta newRespuesta, @PathVariable Long id) {
+        Respuesta updatedRespuesta = respuestaRepository.findById(id)
                 .map( respuesta -> {
                     respuesta.setTexto(newRespuesta.getTexto());
                     respuesta.setCorrecta(newRespuesta.isCorrecta());
@@ -46,11 +69,17 @@ public class RespuestaController {
                     newRespuesta.setId(id);
                     return respuestaRepository.save(newRespuesta);
                 });
+        EntityModel<Respuesta> respuestaEntityModel = assembler.toModel(updatedRespuesta);
+
+        return ResponseEntity
+                .created(respuestaEntityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .body(respuestaEntityModel);
     }
 
     @DeleteMapping("/respuestas/{id}")
-    void deleteRespuesta(@PathVariable Long id) {
+    ResponseEntity<?> deleteRespuesta(@PathVariable Long id) {
         respuestaRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
