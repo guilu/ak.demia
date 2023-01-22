@@ -37,6 +37,7 @@ public class Pregunta extends BaseEntity {
      */
     @ManyToMany(mappedBy = "preguntas")
     @ToString.Exclude
+    @JsonIgnore
     private Collection<Examen> examenes;
 
 }
