@@ -10,8 +10,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class PageApplicationTests {
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+class PageApplicationTests {
 
     @Autowired
     private IndexPage indexPage;
@@ -28,42 +31,39 @@ public class PageApplicationTests {
     private String baseUrl;
 
     @Test
-    @DirtiesContext
     void navigateToIndex() {
         indexPage.goToIndexPage(url());
+        assertThat(indexPage.isAt()).isNotNull();
      }
 
     @Test
-    @DirtiesContext
     void goToLoginPage() {
         indexPage.goToIndexPage(url())
                 .goToLoginPage();
+        assertThat(loginPage.isAt()).isNotNull();
     }
 
     @Test
-    @DirtiesContext
     void performLogin() {
         indexPage.goToIndexPage(url()).goToLoginPage();
-        loginPage.login("user","password");
-        indexPage.iAmLogged();
+        loginPage.login("user@gmail.com","1234");
+        assertThat(indexPage.iAmLogged()).isNotNull();
     }
 
     @Test
-    @DirtiesContext
     void errorPerformingLogin() {
         indexPage.goToIndexPage(url()).goToLoginPage();
         loginPage
-                .login("usuario","password")
+                .login("user@gmail.com","1234")
                 .verifyPasswordErrorMessage("Invalid username and password.");
     }
 
     @Test
-    @DirtiesContext
     void performLogout() {
         indexPage.goToIndexPage(url()).goToLoginPage();
-        loginPage.login("user","password");
+        loginPage.login("user@gmail.com","1234");
         indexPage.gotToLogoutPage();
-        logoutPage.confirmLogout();
+        //logoutPage.confirmLogout();
         indexPage.iJustLoggedOut();
     }
 

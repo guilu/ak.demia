@@ -5,9 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = DomainModelNames.TB03_PREGUNTA, schema = DomainModelNames.SCHEMA)
@@ -40,4 +42,16 @@ public class Pregunta extends BaseEntity {
     @JsonIgnore
     private Collection<Examen> examenes;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Pregunta pregunta = (Pregunta) o;
+        return getId() != null && Objects.equals(getId(), pregunta.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

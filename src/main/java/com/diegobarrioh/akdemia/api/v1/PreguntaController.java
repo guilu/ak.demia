@@ -56,7 +56,7 @@ public class PreguntaController {
     }
 
     @PutMapping("/preguntas/{id}")
-    ResponseEntity<?>  replacePregunta(@RequestBody Pregunta newPregunta, @PathVariable Long id) {
+    ResponseEntity<EntityModel<Pregunta>>  replacePregunta(@RequestBody Pregunta newPregunta, @PathVariable Long id) {
 
         Pregunta updatedPregunta = preguntaRepository.findById(id)
                 .map(pregunta -> {
@@ -76,7 +76,7 @@ public class PreguntaController {
     }
 
     @DeleteMapping("/preguntas/{id}")
-    ResponseEntity<?> deletePregunta(@PathVariable Long id) {
+    ResponseEntity<EntityModel<Pregunta>> deletePregunta(@PathVariable Long id) {
         preguntaRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }

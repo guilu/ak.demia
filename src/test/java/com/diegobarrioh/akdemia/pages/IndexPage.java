@@ -35,17 +35,17 @@ public class IndexPage extends BasePage {
     }
 
     public IndexPage iAmLogged() {
-        assertThat(lnkLogout.isDisplayed()).isEqualTo(true);
+        assertThat(lnkLogout.isDisplayed()).isTrue();
         return this;
     }
 
     public IndexPage iAmNotLogged() {
-        assertThat(lnkLogin.isDisplayed()).isEqualTo(true);
+        assertThat(lnkLogin.isDisplayed()).isTrue();
         return this;
     }
 
     public IndexPage iJustLoggedOut() {
-        assertThat(msgLogout.isDisplayed()).isEqualTo(true);
+        assertThat(msgLogout.isDisplayed()).isTrue();
         return this;
     }
 
@@ -55,8 +55,9 @@ public class IndexPage extends BasePage {
     }
 
     @Override
-    public void isAt() {
+    public IndexPage isAt() {
        assertThat(this.driver.getTitle()).isEqualTo("Akdemia dbhstudios");
+       return this;
     }
 
 }

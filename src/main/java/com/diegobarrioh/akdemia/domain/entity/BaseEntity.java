@@ -25,6 +25,7 @@ public class BaseEntity implements Serializable {
      * public constructor to avoid ioc errors
      */
     public BaseEntity() {
+        //public constructor to hide the implicit one
     }
 
     public static long getSerialVersionUID() {

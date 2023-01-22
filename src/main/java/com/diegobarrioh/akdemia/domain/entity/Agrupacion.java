@@ -4,8 +4,10 @@ import com.diegobarrioh.akdemia.domain.DomainModelNames;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = DomainModelNames.TB01_AGRUPACION, schema = DomainModelNames.SCHEMA)
@@ -25,4 +27,16 @@ public class Agrupacion extends BaseEntity {
     @ToString.Exclude
     private Collection<Tema> temas;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Agrupacion that = (Agrupacion) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -36,7 +35,7 @@ public class AgrupacionController {
 
         List<EntityModel<Agrupacion>> agrupaciones = agrupacionRepository.findAll().stream()
                 .map(assembler::toModel)
-                .collect(Collectors.toList());
+                .toList();
 
         return CollectionModel.of(agrupaciones,
                 linkTo(methodOn(AgrupacionController.class).agrupaciones()).withSelfRel());
@@ -44,7 +43,7 @@ public class AgrupacionController {
     // end::get-aggregate-root[]
 
     @PostMapping("/agrupaciones")
-    ResponseEntity<?> newAgrupacion(@RequestBody Agrupacion agrupacion) {
+    ResponseEntity<EntityModel<Agrupacion>> newAgrupacion(@RequestBody Agrupacion agrupacion) {
 
         EntityModel<Agrupacion> agrupacionEntityModel = assembler.toModel(agrupacionRepository.save(agrupacion));
 
@@ -61,7 +60,7 @@ public class AgrupacionController {
     }
 
     @PutMapping("/agrupaciones/{id}")
-    ResponseEntity<?> replaceAgrupacion(@RequestBody Agrupacion newAgrupacion, @PathVariable Long id) {
+    ResponseEntity<EntityModel<Agrupacion>> replaceAgrupacion(@RequestBody Agrupacion newAgrupacion, @PathVariable Long id) {
         Agrupacion updatedAgrupacion =  agrupacionRepository.findById(id)
                 .map( agrupacion -> {
                     agrupacion.setTexto(newAgrupacion.getTexto());
@@ -79,7 +78,7 @@ public class AgrupacionController {
     }
 
     @DeleteMapping("/agrupaciones/{id}")
-    ResponseEntity<?> deleteAgrupacion(@PathVariable Long id) {
+    ResponseEntity<EntityModel<Agrupacion>> deleteAgrupacion(@PathVariable Long id) {
         agrupacionRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }

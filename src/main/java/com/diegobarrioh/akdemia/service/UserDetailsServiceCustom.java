@@ -5,6 +5,7 @@ import com.diegobarrioh.akdemia.domain.entity.Privilege;
 import com.diegobarrioh.akdemia.domain.entity.Role;
 import com.diegobarrioh.akdemia.domain.entity.User;
 import com.diegobarrioh.akdemia.domain.repository.UserRepository;
+import com.diegobarrioh.akdemia.ex.UpdatingUserException;
 import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.GrantedAuthority;
@@ -50,7 +51,7 @@ public class UserDetailsServiceCustom implements UserDetailsService {
 
         } catch (final Exception e) {
             log.error("DSUserDetailsService.loadUserByUsername:" + "Exception!", e);
-            throw new RuntimeException(e);
+            throw new UpdatingUserException(e.getMessage());
         }
 
     }

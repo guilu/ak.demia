@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -42,7 +41,7 @@ public class RespuestaController {
     }
 
     @PostMapping("/respuestas")
-    ResponseEntity<?> newRespuesta(@RequestBody Respuesta respuesta) {
+    ResponseEntity<EntityModel<Respuesta>> newRespuesta(@RequestBody Respuesta respuesta) {
 
         EntityModel<Respuesta> respuestaEntityModel = assembler.toModel(respuestaRepository.save(respuesta));
 
@@ -58,7 +57,7 @@ public class RespuestaController {
     }
 
     @PutMapping("/respuestas/{id}")
-    ResponseEntity<?> replaceRespuesta(@RequestBody Respuesta newRespuesta, @PathVariable Long id) {
+    ResponseEntity<EntityModel<Respuesta>> replaceRespuesta(@RequestBody Respuesta newRespuesta, @PathVariable Long id) {
         Respuesta updatedRespuesta = respuestaRepository.findById(id)
                 .map( respuesta -> {
                     respuesta.setTexto(newRespuesta.getTexto());
@@ -77,7 +76,7 @@ public class RespuestaController {
     }
 
     @DeleteMapping("/respuestas/{id}")
-    ResponseEntity<?> deleteRespuesta(@PathVariable Long id) {
+    ResponseEntity<EntityModel<Respuesta>> deleteRespuesta(@PathVariable Long id) {
         respuestaRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }

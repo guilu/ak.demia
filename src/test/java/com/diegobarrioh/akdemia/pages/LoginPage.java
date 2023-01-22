@@ -37,7 +37,8 @@ public class LoginPage extends BasePage {
     }
 
     @Override
-    public void isAt() {
+    public LoginPage isAt() {
         assertThat(this.driver.getTitle()).isEqualTo("Log In");
+        return this;
     }
 }

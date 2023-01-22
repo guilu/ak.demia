@@ -38,16 +38,17 @@ public class UserController {
         try {
             registeredUser = userService.registerNewUserAccount(userDto);
             //TODO enviar un evento o algo cuando se ha registrado el usuario.
+            log.info("se enviaria evento de grabado user {}",registeredUser.getEmail());
 
         } catch (UserAlreadyExistsException uaee) {
             log.warn("UserController:" + "UserAlreadyExistException on registration with email: {}!", userDto.getEmail());
-            return new ResponseEntity<JsonResponse>(new JsonResponse(false, "/", 2, "An account already exists for that email address!"), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(new JsonResponse(false, "/", 2, "An account already exists for that email address!"), HttpStatus.CONFLICT);
         } catch (Exception e) {
             log.error("UserController:" + "Some Exception!", e);
-            return new ResponseEntity<JsonResponse>(new JsonResponse(false, "/", 5, "System Error!"), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new JsonResponse(false, "/", 5, "System Error!"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         // If there were no exceptions then the registration was a success!
-        return new ResponseEntity<JsonResponse>(new JsonResponse(true,"/",0,"registration success!!"), HttpStatus.OK);
+        return new ResponseEntity<>(new JsonResponse(true,"/",0,"registration success!!"), HttpStatus.OK);
     }
 }

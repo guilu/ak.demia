@@ -24,6 +24,6 @@ public abstract class BasePage {
         return driver;
     }
 
-    public abstract void isAt();
+    public abstract BasePage isAt();
 
 }

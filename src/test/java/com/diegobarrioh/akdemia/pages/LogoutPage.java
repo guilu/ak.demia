@@ -13,8 +13,9 @@ public class LogoutPage extends BasePage{
     private WebElement submit;
 
     @Override
-    public void isAt() {
+    public LogoutPage isAt() {
         assertThat(this.driver.getTitle()).isEqualTo("logout");
+        return this;
     }
 
     public LogoutPage confirmLogout(){
