@@ -28,3 +28,7 @@ spring:
 browser: "chrome"
 screenshot:
   path: "target/"
+logging:
+  level:
+    com.diegobarrioh.akdemia: DEBUG
+

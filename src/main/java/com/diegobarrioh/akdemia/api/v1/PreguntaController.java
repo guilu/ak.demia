@@ -4,6 +4,7 @@ import com.diegobarrioh.akdemia.api.ApiRequestMappings;
 import com.diegobarrioh.akdemia.domain.entity.Pregunta;
 import com.diegobarrioh.akdemia.domain.repository.PreguntaRepository;
 import com.diegobarrioh.akdemia.ex.EntityNotFoundException;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -17,6 +18,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@Log4j2
 @RequestMapping(value = ApiRequestMappings.API_V1, produces = MediaType.APPLICATION_JSON_VALUE)
 public class PreguntaController {
 
@@ -41,6 +43,8 @@ public class PreguntaController {
 
     @PostMapping("/preguntas")
     ResponseEntity<EntityModel<Pregunta>> newPregunta(@RequestBody Pregunta pregunta) {
+
+        log.debug("Pregunta insert --> {}", pregunta);
 
         EntityModel<Pregunta> preguntaEntityModel = assembler.toModel(preguntaRepository.save(pregunta));
 

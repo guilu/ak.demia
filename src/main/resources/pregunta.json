@@ -1,0 +1,9 @@
+{
+	"texto": "texto de la pregunta",
+	"respuestas": [
+		{"texto": "respuesta 1", "correcta": false},
+		{"texto": "respuesta 2", "correcta": false},
+		{"texto": "respuesta 3", "correcta": true},
+		{"texto": "respuesta 4", "correcta": false}
+	]
+}

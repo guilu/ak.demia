@@ -6,14 +6,17 @@ import com.diegobarrioh.akdemia.pages.LogoutPage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@AutoConfigureMockMvc
 class PageApplicationTests {
 
     @Autowired
@@ -44,6 +47,7 @@ class PageApplicationTests {
     }
 
     @Test
+    @WithMockUser
     void performLogin() {
         indexPage.goToIndexPage(url()).goToLoginPage();
         loginPage.login("user@gmail.com","1234");
@@ -55,7 +59,7 @@ class PageApplicationTests {
         indexPage.goToIndexPage(url()).goToLoginPage();
         loginPage
                 .login("user@gmail.com","1234")
-                .verifyPasswordErrorMessage("Invalid username and password.");
+                .verifyPasswordErrorMessage("Username and/or password erróneo.");
     }
 
     @Test
@@ -66,6 +70,7 @@ class PageApplicationTests {
         //logoutPage.confirmLogout();
         indexPage.iJustLoggedOut();
     }
+
 
     private String url(){
         return this.baseUrl+":"+this.port;

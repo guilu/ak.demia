@@ -4,6 +4,7 @@ import com.diegobarrioh.akdemia.api.ApiRequestMappings;
 import com.diegobarrioh.akdemia.domain.entity.Agrupacion;
 import com.diegobarrioh.akdemia.domain.repository.AgrupacionRepository;
 import com.diegobarrioh.akdemia.ex.EntityNotFoundException;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -17,6 +18,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@Log4j2
 @RequestMapping(value = ApiRequestMappings.API_V1, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AgrupacionController {
 
@@ -45,6 +47,7 @@ public class AgrupacionController {
     @PostMapping("/agrupaciones")
     ResponseEntity<EntityModel<Agrupacion>> newAgrupacion(@RequestBody Agrupacion agrupacion) {
 
+        log.debug("Agrupacion insert --> {}",agrupacion);
         EntityModel<Agrupacion> agrupacionEntityModel = assembler.toModel(agrupacionRepository.save(agrupacion));
 
         return ResponseEntity.created(agrupacionEntityModel

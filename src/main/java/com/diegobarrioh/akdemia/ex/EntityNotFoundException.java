@@ -14,7 +14,7 @@ public class EntityNotFoundException extends RuntimeException {
     private static final long serialVersionUID = -1L;
 
     public EntityNotFoundException(String entity, Long id) {
-        super("Could not find "+entity+" with id "+id);
+        super("Could not find "+entity+" with id "+id+"\n");
     }
 
 }

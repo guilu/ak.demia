@@ -1,4 +1,4 @@
-package com.diegobarrioh.akdemia.conf;
+package com.diegobarrioh.akdemia.controller.conf;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +21,7 @@ public class SecurityConfiguration {
         // @formatter:off
         http
                 .authorizeHttpRequests( authorize -> authorize
-                        .requestMatchers("/","/register","/user/register","/h2-console/**","/api/**").permitAll()
+                        .requestMatchers("/","/register","/user/register","/h2-console/**","/api/v1/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
