@@ -1,12 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
   <meta charset="UTF-8">
-  <title>Backstages</title>
+  <title>Backstage</title>
 </head>
 <body>
 
 
+<ul>
+  <li><a th:href="@{/}" th:id="home_link" th:text="#{menu.home}">Inicio</a></li>
+</ul>
+
+<ul>
+  <li>
+    <a th:href="@{/backstage/new-agrupacion}" th:text="#{backstage.agrupacion}">Mantener Agrupaciones</a>
+  </li>
+</ul>
 
 
 </body>

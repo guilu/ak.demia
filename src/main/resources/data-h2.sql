@@ -25,25 +25,25 @@ INSERT INTO BDD_AKDEMIA.TB00_ROLE_PRIVILEGE VALUES (3,3);
 INSERT INTO BDD_AKDEMIA.TB00_USER_ROLE VALUES (1,1);
 INSERT INTO BDD_AKDEMIA.TB00_USER_ROLE VALUES (2,2);
 
-INSERT INTO BDD_AKDEMIA.tb01_agrupacion VALUES (1,'CONOCIMIENTOS GENERALES'),
+INSERT INTO BDD_AKDEMIA.tb01_agrupacion(ID,TEXTO) VALUES (1,'CONOCIMIENTOS GENERALES'),
                                               (2,'CONOCIMIENTOS ESPECIFICOS'),
                                               (3,'TEMAS ESPECÍFICOS DEL SPEIS');
 
-INSERT INTO BDD_AKDEMIA.tb05_examen VALUES (1,'Ayto. Valencia 2018 - Bombero'),
+INSERT INTO BDD_AKDEMIA.tb05_examen(ID,TEXTO) VALUES (1,'Ayto. Valencia 2018 - Bombero'),
                                           (2,'Cons. Valencia 2019 - Bombero'),
                                           (3,'Ayto. Alicante 2020 - Oficial Específico'),
                                           (4,'Ayto. Alicante 2020 - Oficial Legislación');
 
-INSERT INTO BDD_AKDEMIA.tb02_tema  VALUES (1,'Constitución Española',1),
-                                         (2,'Estatuto de Autonomía de la CV',1),
-                                         (3,'Ley de Bases del Régimen Local',1),
-                                         (4,'Ley de Régimen Local de la CV',1),
-                                         (5,'Ley de Prevención de Riesgos Laborales',1),
-                                         (6,'Estatuto Básico del Empleado Público',1),
-                                         (7,'Ordenación y Gestión de la FPV',1),
-                                         (8,'Ley de Incompatibilidades',1),
-                                         (9,'Derecho Administrativo',1),
-                                         (10,'Hacienda Pública y Administración Tributaria',1);
+INSERT INTO BDD_AKDEMIA.tb02_tema(ID,TEXTO)  VALUES (1,'Constitución Española'),
+                                         (2,'Estatuto de Autonomía de la CV'),
+                                         (3,'Ley de Bases del Régimen Local'),
+                                         (4,'Ley de Régimen Local de la CV'),
+                                         (5,'Ley de Prevención de Riesgos Laborales'),
+                                         (6,'Estatuto Básico del Empleado Público'),
+                                         (7,'Ordenación y Gestión de la FPV'),
+                                         (8,'Ley de Incompatibilidades'),
+                                         (9,'Derecho Administrativo'),
+                                         (10,'Hacienda Pública y Administración Tributaria');
 
 
 INSERT INTO BDD_AKDEMIA.tb03_pregunta(ID,TEXTO,TEMA_ID) VALUES (1,'¿Qué Artículo de la Constitución está dedicado a la irretroactividad de las disposiciones  desfavorables o restrictivas de derechos individuales?',1),
