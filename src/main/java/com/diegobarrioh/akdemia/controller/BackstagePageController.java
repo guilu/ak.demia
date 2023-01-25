@@ -1,6 +1,7 @@
 package com.diegobarrioh.akdemia.controller;
 
 import com.diegobarrioh.akdemia.domain.entity.Agrupacion;
+import com.diegobarrioh.akdemia.domain.entity.Tema;
 import com.diegobarrioh.akdemia.domain.repository.AgrupacionRepository;
 import com.diegobarrioh.akdemia.service.AgrupacionService;
 import jakarta.transaction.Transactional;
@@ -37,7 +38,16 @@ public class BackstagePageController {
     @PostMapping("/new-agrupacion")
     public String newAgrupacion(@ModelAttribute Agrupacion agrupacion, Model model) {
         Agrupacion agrupacionSaved = agrupacionService.save(agrupacion);
-        model.addAttribute("new-agrupacion",agrupacionSaved);
+        model.addAttribute("agrupacion",agrupacionSaved);
         return "backstage/agrupacion";
     }
+
+
+    @GetMapping("/new-tema")
+    public String nuevoTemaForm(Model model){
+        model.addAttribute("agrupaciones", agrupacionService.getAgrupacionesAlphabetically());
+        model.addAttribute("tema", new Tema());
+        return "backstage/tema";
+    }
+
 }

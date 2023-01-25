@@ -19,4 +19,8 @@ public class AgrupacionService {
         log.info("Guardando nueva agrupacion {} con id: {}",agrupacion,agrupacion.getId());
         return this.agrupacionRepository.save(agrupacion);
     }
+
+    public Object getAgrupacionesAlphabetically() {
+        return this.agrupacionRepository.findAllByOrderByTexto();
+    }
 }

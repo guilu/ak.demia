@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <meta charset="UTF-8">
+  <title>Nuevo tema</title>
+</head>
+<body>
+
+<form th:action="@{/new-tema}" th:object="${tema}" method="post">
+
+  <div >
+    <label for="texto">Texto:</label>
+    <textarea  id="texto" rows="3" th:field="*{texto}"></textarea>
+  </div>
+
+  <hr>
+
+  <div >
+    <label for="idAgrupacion">Asignar a una Agrupación:</label>
+    <select id="idAgrupacion" class="form-control form-control-lg" th:field="*{id}">
+      <option value="0">Selecciona una agrupacion</option>
+      <option th:each="agrupacion : ${agrupaciones}" th:value="${agrupacion.id}" th:text="${agrupacion.texto}">Tema XXX</option>
+    </select>
+  </div>
+
+
+  <button type="submit">Guardar</button>
+
+</form>
+
+</body>
+</html>
