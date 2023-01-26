@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form th:action="@{/new-tema}" th:object="${tema}" method="post">
+<form th:action="@{/backstage/new-tema}" th:object="${tema}" method="post">
 
   <div >
     <label for="texto">Texto:</label>
@@ -23,7 +23,6 @@
       <option th:each="agrupacion : ${agrupaciones}" th:value="${agrupacion.id}" th:text="${agrupacion.texto}">Tema XXX</option>
     </select>
   </div>
-
 
   <button type="submit">Guardar</button>
 
