@@ -13,8 +13,8 @@ spring:
   jpa:
     generate-ddl: true #change to false in production mode
     hibernate:
-      ddl-auto: create-drop #change to validate in production mode
-    show-sql: false
+      ddl-auto: create #change to validate in production mode
+    show-sql: true
     defer-datasource-initialization: true
     properties:
       hibernate:
