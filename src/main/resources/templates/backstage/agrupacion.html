@@ -7,6 +7,10 @@
 </head>
 <body>
 
+<div th:if="${param.msg}" th:id="msg_agrupacion" th:text="#{msg.agrupacion}">
+  Agrupación guardada correctamente
+</div>
+
 <ul>
   <li><a th:href="@{/}" th:id="home_link" th:text="#{menu.home}">Inicio</a></li>
   <li>

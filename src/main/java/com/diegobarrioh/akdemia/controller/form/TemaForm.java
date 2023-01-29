@@ -13,6 +13,7 @@ public class TemaForm {
 
     @NotNull(message = "Un tema debe asignarse a una agrupacion")
     long idAgrupacion;
+
     @NotEmpty(message = "Texto no puede ser vacío")
     String texto;
 

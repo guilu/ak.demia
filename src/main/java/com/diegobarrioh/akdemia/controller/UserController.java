@@ -49,6 +49,8 @@ public class UserController {
         }
 
         // If there were no exceptions then the registration was a success!
-        return new ResponseEntity<>(new JsonResponse(true,"/",0,"registration success!!"), HttpStatus.OK);
+        return new ResponseEntity<>(new JsonResponse(true,"/register-complete",0,"registration success!!"), HttpStatus.OK);
     }
+
+
 }

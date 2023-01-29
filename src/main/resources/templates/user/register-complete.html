@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:utext="#{page.title.registrationComplete}">
+    Registration Complete!
+  </title>
+</head>
+
+<body>
+
+<div>
+  <section id="main_content">
+    <div>
+      <h1 th:utext="#{message.regSuccessConfirmed}"></h1>
+      <div>
+        <div>
+          <span th:utext="#{message.regSuccessNextSteps}"></span>
+          <a th:href="@{/backstage}">
+            <span th:text="#{label.pages.backstage}"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+</body>
+</html>

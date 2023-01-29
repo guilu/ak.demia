@@ -1,5 +1,6 @@
 package com.diegobarrioh.akdemia.controller;
 
+import com.diegobarrioh.akdemia.controller.form.PreguntaForm;
 import com.diegobarrioh.akdemia.controller.form.TemaForm;
 import com.diegobarrioh.akdemia.domain.entity.Agrupacion;
 import com.diegobarrioh.akdemia.domain.entity.Tema;
@@ -28,7 +29,7 @@ public class BackstagePageController {
         this.temaService = temaService;
     }
 
-    @GetMapping("/")
+    @GetMapping(value={"/",""})
     public String index(){
         return "backstage/index";
     }
@@ -36,7 +37,7 @@ public class BackstagePageController {
     @GetMapping("/new-agrupacion")
     public String newAgrupacionPage(Model model) {
         model.addAttribute("agrupacion",new Agrupacion());
-        
+
         return "backstage/agrupacion";
     }
 
@@ -67,6 +68,14 @@ public class BackstagePageController {
        model.addAttribute("temaForm",new TemaForm() );
 
        return "backstage/tema";
+    }
+
+    @GetMapping("/new-pregunta")
+    public String nuevaPreguntaForm(Model model){
+
+        model.addAttribute("preguntaForm",new PreguntaForm());
+        return "backstage/pregunta";
+
     }
 
 }
