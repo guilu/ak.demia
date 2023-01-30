@@ -10,4 +10,6 @@ import java.util.List;
 public interface AgrupacionRepository extends JpaRepository<Agrupacion, Long> {
 
     List<Agrupacion> findByTextoContainingIgnoreCase(String texto);
+
+    List<Agrupacion> findAllByOrderByTexto();
 }

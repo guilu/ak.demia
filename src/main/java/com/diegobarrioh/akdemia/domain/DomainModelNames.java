@@ -2,6 +2,8 @@ package com.diegobarrioh.akdemia.domain;
 
 public class DomainModelNames {
 
+    private DomainModelNames() {}
+
     public static final String SCHEMA = "BDD_AKDEMIA";
     public static final String TB00_USER = "TB00_USER";
     public static final String TB00_ROLE = "TB00_ROLE";

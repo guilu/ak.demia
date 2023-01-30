@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = DomainModelNames.TB05_EXAMEN, schema = DomainModelNames.SCHEMA)
@@ -29,4 +30,18 @@ public class Examen extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "ID_PREGUNTA", referencedColumnName = "id")
     )
     private Collection<Pregunta> preguntas;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Examen examen = (Examen) o;
+        return Objects.equals(texto, examen.texto) && Objects.equals(preguntas, examen.preguntas);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), texto, preguntas);
+    }
 }

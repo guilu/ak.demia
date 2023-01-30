@@ -4,6 +4,7 @@ import com.diegobarrioh.akdemia.api.ApiRequestMappings;
 import com.diegobarrioh.akdemia.domain.entity.Agrupacion;
 import com.diegobarrioh.akdemia.domain.repository.AgrupacionRepository;
 import com.diegobarrioh.akdemia.ex.EntityNotFoundException;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -12,12 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@Log4j2
 @RequestMapping(value = ApiRequestMappings.API_V1, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AgrupacionController {
 
@@ -36,7 +37,7 @@ public class AgrupacionController {
 
         List<EntityModel<Agrupacion>> agrupaciones = agrupacionRepository.findAll().stream()
                 .map(assembler::toModel)
-                .collect(Collectors.toList());
+                .toList();
 
         return CollectionModel.of(agrupaciones,
                 linkTo(methodOn(AgrupacionController.class).agrupaciones()).withSelfRel());
@@ -44,8 +45,9 @@ public class AgrupacionController {
     // end::get-aggregate-root[]
 
     @PostMapping("/agrupaciones")
-    ResponseEntity<?> newAgrupacion(@RequestBody Agrupacion agrupacion) {
+    ResponseEntity<EntityModel<Agrupacion>> newAgrupacion(@RequestBody Agrupacion agrupacion) {
 
+        log.debug("Agrupacion insert --> {}",agrupacion);
         EntityModel<Agrupacion> agrupacionEntityModel = assembler.toModel(agrupacionRepository.save(agrupacion));
 
         return ResponseEntity.created(agrupacionEntityModel
@@ -61,7 +63,7 @@ public class AgrupacionController {
     }
 
     @PutMapping("/agrupaciones/{id}")
-    ResponseEntity<?> replaceAgrupacion(@RequestBody Agrupacion newAgrupacion, @PathVariable Long id) {
+    ResponseEntity<EntityModel<Agrupacion>> replaceAgrupacion(@RequestBody Agrupacion newAgrupacion, @PathVariable Long id) {
         Agrupacion updatedAgrupacion =  agrupacionRepository.findById(id)
                 .map( agrupacion -> {
                     agrupacion.setTexto(newAgrupacion.getTexto());
@@ -79,7 +81,7 @@ public class AgrupacionController {
     }
 
     @DeleteMapping("/agrupaciones/{id}")
-    ResponseEntity<?> deleteAgrupacion(@PathVariable Long id) {
+    ResponseEntity<EntityModel<Agrupacion>> deleteAgrupacion(@PathVariable Long id) {
         agrupacionRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }

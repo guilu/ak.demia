@@ -22,7 +22,7 @@
       </div>
       <div sec:authorize="isAuthenticated()">
         <div th:inline="text">
-          <span th:remove="tag" sec:authentication="name">#usuario</span> | <a th:href="@{/logout}" th:id="logout" th:text="#{menu.logout}">log out</a>
+          <span th:remove="tag" sec:authentication="name">#usuario</span> | <a th:href="@{/backstage/}" th:id="backstage" th:text="#{menu.backstage}">Backstage</a>  | <a th:href="@{/logout}" th:id="logout" th:text="#{menu.logout}" >log out</a>
         </div>
       </div>
     </li>

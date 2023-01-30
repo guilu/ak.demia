@@ -8,7 +8,7 @@
 
 <h1>register</h1>
 
-<form th:action="@{/user/register}" method="POST" enctype="utf8">
+<form id="register-form" enctype="utf8" method="POST" th:action="@{/user/register}">
 
   <div>
     <label for="firstName">
@@ -59,7 +59,41 @@
     <li><a th:href="@{/}" th:id="home_link" th:text="#{menu.home}">Inicio</a></li>
   </ul>
 
+<script lang="javascript">
 
+    window.addEventListener("DOMContentLoaded", function() {
+
+        let form = document.getElementById("register-form");
+        let data = new FormData(form);
+
+        document.addEventListener('submit', function (event) {
+           event.preventDefault();
+
+           console.log("procesando envío manual");
+
+           fetch('/user/register',{
+               method: 'POST',
+               body: new FormData(event.target)
+           }).then( (response) => {
+               if (response.ok) {
+                  return response.json()
+               }
+               return Promise.reject(response);
+           }).then(function (data){
+               //success:
+               //redirectUrl:
+               //code:
+               //message:
+               console.log('redirecting-to-'+data.redirectUrl);
+               window.location.href = data.redirectUrl;
+
+           }).catch(function (error) {
+               console.error(error)
+           })
+        });
+
+    });
+</script>
 
 </body>
 </html>

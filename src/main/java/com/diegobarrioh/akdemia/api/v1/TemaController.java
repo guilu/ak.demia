@@ -37,7 +37,7 @@ public class TemaController {
     }
 
     @PostMapping("/temas")
-    ResponseEntity<?> newTema(@RequestBody Tema tema) {
+    ResponseEntity<EntityModel<Tema>> newTema(@RequestBody Tema tema) {
         EntityModel<Tema> temaEntityModel = assembler.toModel(temaRepository.save(tema));
 
         return ResponseEntity.created(
@@ -51,7 +51,7 @@ public class TemaController {
     }
 
     @PutMapping("/temas/{id}")
-    ResponseEntity<?> replaceTema(@RequestBody Tema newTema, @PathVariable Long id) {
+    ResponseEntity<EntityModel<Tema>> replaceTema(@RequestBody Tema newTema, @PathVariable Long id) {
         Tema updatedTema =  temaRepository.findById(id)
                 .map(tema -> {
                             tema.setTexto(newTema.getTexto());
@@ -70,7 +70,7 @@ public class TemaController {
     }
 
     @DeleteMapping("/temas/{id}")
-    ResponseEntity<?> deleteTema(@PathVariable Long id) {
+    ResponseEntity<EntityModel<Tema>> deleteTema(@PathVariable Long id) {
         temaRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }

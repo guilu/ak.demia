@@ -13,7 +13,7 @@ spring:
   jpa:
     generate-ddl: true #change to false in production mode
     hibernate:
-      ddl-auto: create-drop #change to validate in production mode
+      ddl-auto: create #change to validate in production mode
     show-sql: true
     defer-datasource-initialization: true
     properties:
@@ -28,3 +28,7 @@ spring:
 browser: "chrome"
 screenshot:
   path: "target/"
+logging:
+  level:
+    com.diegobarrioh.akdemia: DEBUG
+

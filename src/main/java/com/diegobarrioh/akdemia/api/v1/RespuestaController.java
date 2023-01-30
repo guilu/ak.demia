@@ -4,6 +4,7 @@ import com.diegobarrioh.akdemia.api.ApiRequestMappings;
 import com.diegobarrioh.akdemia.domain.entity.Respuesta;
 import com.diegobarrioh.akdemia.domain.repository.RespuestaRepository;
 import com.diegobarrioh.akdemia.ex.EntityNotFoundException;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -12,12 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@Log4j2
 @RequestMapping(value = ApiRequestMappings.API_V1, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RespuestaController {
 
@@ -42,7 +43,9 @@ public class RespuestaController {
     }
 
     @PostMapping("/respuestas")
-    ResponseEntity<?> newRespuesta(@RequestBody Respuesta respuesta) {
+    ResponseEntity<EntityModel<Respuesta>> newRespuesta(@RequestBody Respuesta respuesta) {
+
+        log.debug("Respuesta a insertar --> {}",respuesta);
 
         EntityModel<Respuesta> respuestaEntityModel = assembler.toModel(respuestaRepository.save(respuesta));
 
@@ -58,7 +61,7 @@ public class RespuestaController {
     }
 
     @PutMapping("/respuestas/{id}")
-    ResponseEntity<?> replaceRespuesta(@RequestBody Respuesta newRespuesta, @PathVariable Long id) {
+    ResponseEntity<EntityModel<Respuesta>> replaceRespuesta(@RequestBody Respuesta newRespuesta, @PathVariable Long id) {
         Respuesta updatedRespuesta = respuestaRepository.findById(id)
                 .map( respuesta -> {
                     respuesta.setTexto(newRespuesta.getTexto());
@@ -77,7 +80,7 @@ public class RespuestaController {
     }
 
     @DeleteMapping("/respuestas/{id}")
-    ResponseEntity<?> deleteRespuesta(@PathVariable Long id) {
+    ResponseEntity<EntityModel<Respuesta>> deleteRespuesta(@PathVariable Long id) {
         respuestaRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }

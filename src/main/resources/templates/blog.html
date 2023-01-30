@@ -7,10 +7,13 @@
 <body>
 <h1>Blog</h1>
 
-
 <div sec:authorize="isAuthenticated()">
+  <ul>
+    <li><a th:href="@{/}" th:id="home_link" th:text="#{menu.home}">Inicio</a></li>
+    <li><a th:href="@{/logout}" th:id="logout">Log Out</a></li>
+  </ul>
+
   <div th:inline="text">Hola <span th:remove="tag" sec:authentication="name">#usuario</span>!</div>
-  <a th:href="@{/logout}" th:id="logout">Log Out</a>
 </div>
 
 </body>

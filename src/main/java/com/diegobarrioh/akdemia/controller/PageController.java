@@ -17,6 +17,9 @@ public class PageController {
     @GetMapping("/register")
     public String register() { return "/user/register"; }
 
+    @GetMapping("/register-complete")
+    public String registerComplete() { return "/user/register-complete"; }
+
     @GetMapping("/logout")
     public String logout() { return "/user/logout"; }
 

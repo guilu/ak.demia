@@ -1,11 +1,15 @@
+<!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
   <meta charset="UTF-8">
-  <title>Backstage</title>
+  <title>nueva agrupación</title>
 </head>
 <body>
 
+<div th:if="${param.msg}" th:id="msg_agrupacion" th:text="#{msg.agrupacion}">
+  Agrupación guardada correctamente
+</div>
 
 <ul>
   <li><a th:href="@{/}" th:id="home_link" th:text="#{menu.home}">Inicio</a></li>
@@ -17,6 +21,17 @@
   </li>
 </ul>
 
+
+<form th:action="@{/backstage/new-agrupacion}" th:object="${agrupacion}" method="post">
+
+  <div>
+    <label for="texto">Texto:</label>
+    <textarea class="form-control" id="texto" rows="3" th:field="*{texto}"></textarea>
+  </div>
+
+  <button type="submit" th:text="#{submit.guardar}">guardar</button>
+
+</form>
 
 </body>
 </html>

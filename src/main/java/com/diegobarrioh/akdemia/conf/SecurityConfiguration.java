@@ -20,8 +20,8 @@ public class SecurityConfiguration {
 
         // @formatter:off
         http
-                .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/","/register","/user/register","/h2-console/**","/api/**").permitAll()
+                .authorizeHttpRequests( authorize -> authorize
+                        .requestMatchers("/","/register","/user/register","/register-complete","/h2-console/**","/api/v1/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

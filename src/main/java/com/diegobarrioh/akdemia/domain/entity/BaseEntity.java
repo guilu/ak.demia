@@ -16,15 +16,15 @@ public class BaseEntity implements Serializable {
     @Serial
     private static final long serialVersionUID = 1234L;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @JsonIgnore
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
      * public constructor to avoid ioc errors
      */
     public BaseEntity() {
+        //public constructor to hide the implicit one
     }
 
     public static long getSerialVersionUID() {

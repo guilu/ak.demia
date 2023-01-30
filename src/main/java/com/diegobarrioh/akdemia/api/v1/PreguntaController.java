@@ -4,6 +4,7 @@ import com.diegobarrioh.akdemia.api.ApiRequestMappings;
 import com.diegobarrioh.akdemia.domain.entity.Pregunta;
 import com.diegobarrioh.akdemia.domain.repository.PreguntaRepository;
 import com.diegobarrioh.akdemia.ex.EntityNotFoundException;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -17,6 +18,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@Log4j2
 @RequestMapping(value = ApiRequestMappings.API_V1, produces = MediaType.APPLICATION_JSON_VALUE)
 public class PreguntaController {
 
@@ -42,6 +44,8 @@ public class PreguntaController {
     @PostMapping("/preguntas")
     ResponseEntity<EntityModel<Pregunta>> newPregunta(@RequestBody Pregunta pregunta) {
 
+        log.debug("Pregunta insert --> {}", pregunta);
+
         EntityModel<Pregunta> preguntaEntityModel = assembler.toModel(preguntaRepository.save(pregunta));
 
         return ResponseEntity.created(
@@ -56,7 +60,7 @@ public class PreguntaController {
     }
 
     @PutMapping("/preguntas/{id}")
-    ResponseEntity<?>  replacePregunta(@RequestBody Pregunta newPregunta, @PathVariable Long id) {
+    ResponseEntity<EntityModel<Pregunta>>  replacePregunta(@RequestBody Pregunta newPregunta, @PathVariable Long id) {
 
         Pregunta updatedPregunta = preguntaRepository.findById(id)
                 .map(pregunta -> {
@@ -76,7 +80,7 @@ public class PreguntaController {
     }
 
     @DeleteMapping("/preguntas/{id}")
-    ResponseEntity<?> deletePregunta(@PathVariable Long id) {
+    ResponseEntity<EntityModel<Pregunta>> deletePregunta(@PathVariable Long id) {
         preguntaRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }

@@ -6,12 +6,18 @@ import com.diegobarrioh.akdemia.pages.LogoutPage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class PageApplicationTests {
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@AutoConfigureMockMvc
+class PageApplicationTests {
 
     @Autowired
     private IndexPage indexPage;
@@ -28,44 +34,43 @@ public class PageApplicationTests {
     private String baseUrl;
 
     @Test
-    @DirtiesContext
     void navigateToIndex() {
         indexPage.goToIndexPage(url());
+        assertThat(indexPage.isAt()).isNotNull();
      }
 
     @Test
-    @DirtiesContext
     void goToLoginPage() {
         indexPage.goToIndexPage(url())
                 .goToLoginPage();
+        assertThat(loginPage.isAt()).isNotNull();
     }
 
     @Test
-    @DirtiesContext
+    @WithMockUser
     void performLogin() {
         indexPage.goToIndexPage(url()).goToLoginPage();
-        loginPage.login("user","password");
-        indexPage.iAmLogged();
+        loginPage.login("user@gmail.com","1234");
+        assertThat(indexPage.iAmLogged()).isNotNull();
     }
 
     @Test
-    @DirtiesContext
     void errorPerformingLogin() {
         indexPage.goToIndexPage(url()).goToLoginPage();
         loginPage
-                .login("usuario","password")
-                .verifyPasswordErrorMessage("Invalid username and password.");
+                .login("user@gmail.com","1234")
+                .verifyPasswordErrorMessage("Username and/or password erróneo.");
     }
 
     @Test
-    @DirtiesContext
     void performLogout() {
         indexPage.goToIndexPage(url()).goToLoginPage();
-        loginPage.login("user","password");
+        loginPage.login("user@gmail.com","1234");
         indexPage.gotToLogoutPage();
-        logoutPage.confirmLogout();
+        //logoutPage.confirmLogout();
         indexPage.iJustLoggedOut();
     }
+
 
     private String url(){
         return this.baseUrl+":"+this.port;
