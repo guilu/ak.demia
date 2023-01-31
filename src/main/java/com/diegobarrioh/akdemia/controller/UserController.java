@@ -42,7 +42,7 @@ public class UserController {
 
         } catch (UserAlreadyExistsException uaee) {
             log.warn("UserController:" + "UserAlreadyExistException on registration with email: {}!", userDto.getEmail());
-            return new ResponseEntity<>(new JsonResponse(false, "/", 2, "An account already exists for that email address!"), HttpStatus.CONFLICT);
+            throw new UserAlreadyExistsException("An account already exists for that email address!");
         } catch (Exception e) {
             log.error("UserController:" + "Some Exception!", e);
             return new ResponseEntity<>(new JsonResponse(false, "/", 5, "System Error!"), HttpStatus.INTERNAL_SERVER_ERROR);

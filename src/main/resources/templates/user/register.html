@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>registers</title>
@@ -63,32 +63,45 @@
 
     window.addEventListener("DOMContentLoaded", function() {
 
+        console.log("DOMContentLoaded");
+
         let form = document.getElementById("register-form");
         let data = new FormData(form);
 
         document.addEventListener('submit', function (event) {
-           event.preventDefault();
+            console.log("submit");
 
-           console.log("procesando envío manual");
+            event.preventDefault();
 
-           fetch('/user/register',{
-               method: 'POST',
-               body: new FormData(event.target)
-           }).then( (response) => {
-               if (response.ok) {
-                  return response.json()
-               }
-               return Promise.reject(response);
-           }).then(function (data){
-               //success:
-               //redirectUrl:
-               //code:
-               //message:
-               console.log('redirecting-to-'+data.redirectUrl);
+            let pass = document.getElementById("password");
+            let matchPass = document.getElementById("matchPassword");
+            let errorElement = document.getElementById("globalError");
+
+            if (pass.value !== matchPass.value) {
+                errorElement.style.display = 'block';
+                errorElement.textContent = "[[#{PasswordMatches.user}]]";
+                return false;
+            } else {
+                errorElement.style.display = 'none';
+                errorElement.textContent = "";
+            }
+
+            fetch('/user/register',{
+                method: 'POST',
+                body: new FormData(event.target)
+            }).then( (response) => {
+                if (response.ok) {
+                    return response.json()
+                }
+                return Promise.reject(response);
+            }).then(function (data){
                window.location.href = data.redirectUrl;
-
            }).catch(function (error) {
-               console.error(error)
+               error.json().then( (error) => {
+                   console.error(error.message);
+                   errorElement.style.display = 'block';
+                   errorElement.textContent = error.message;
+               })
            })
         });
 

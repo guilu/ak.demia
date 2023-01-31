@@ -12,5 +12,5 @@ public class JsonResponse {
     private boolean success;
     private String redirectUrl;
     private Integer code;
-    private String messages;
+    private String message;
 }
