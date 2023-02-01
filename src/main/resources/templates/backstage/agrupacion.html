@@ -22,6 +22,14 @@
 </ul>
 
 
+<h2>lista agrupaciones</h2>
+
+<!--/*@thymesVar id="agrupaciones" type="com.diegobarrioh.akdemia.domain.entity.Agrupacion"*/-->
+<ul th:each="agrupacion: ${agrupaciones}">
+  <li th:text="${agrupacion.texto}"></li>
+</ul>
+
+
 <form th:action="@{/backstage/new-agrupacion}" th:object="${agrupacion}" method="post">
 
   <div>

@@ -36,6 +36,7 @@ public class BackstagePageController {
 
     @GetMapping("/new-agrupacion")
     public String newAgrupacionPage(Model model) {
+        model.addAttribute("agrupaciones", agrupacionService.getAgrupacionesAlphabetically());
         model.addAttribute("agrupacion",new Agrupacion());
 
         return "backstage/agrupacion";
@@ -45,6 +46,7 @@ public class BackstagePageController {
     public String newAgrupacionSubmit(@ModelAttribute Agrupacion agrupacion, Model model) {
         model.addAttribute("agrupacion",agrupacionService.save(agrupacion));
 
+        model.addAttribute("agrupaciones", agrupacionService.getAgrupacionesAlphabetically());
         return "backstage/agrupacion";
     }
 
