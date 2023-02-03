@@ -41,5 +41,18 @@
 
 </form>
 
+<script lang="javascript">
+
+    window.addEventListener("DOMContentLoaded", function() {
+
+        console.log("DOMContentLoaded");
+        fetch('/api/v1/agrupaciones')
+            .then((response) => response.json())
+            .then( (data) => console.log(data._embedded.agrupacionList) );
+
+    });
+
+</script>
+
 </body>
 </html>
