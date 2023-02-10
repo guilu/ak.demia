@@ -8,6 +8,8 @@ import com.diegobarrioh.akdemia.domain.repository.TemaRepository;
 import com.diegobarrioh.akdemia.ex.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TemaService {
 
@@ -28,5 +30,13 @@ public class TemaService {
         tema.setAgrupacion(agrupacion);
 
         return temaRepository.save(tema);
+    }
+
+    public List<Tema> getTemas(){
+        return temaRepository.findAll();
+    }
+
+    public Tema getTema(int idTema) {
+        return temaRepository.findById(Integer.toUnsignedLong(idTema)).orElseThrow( () -> new EntityNotFoundException("tema", Integer.toUnsignedLong(idTema)));
     }
 }

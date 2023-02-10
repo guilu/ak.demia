@@ -5,9 +5,11 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Data
 public class PreguntaForm {
 
@@ -15,9 +17,12 @@ public class PreguntaForm {
     private int idTema;
 
     @NotEmpty(message = "El texto de la pregunta no se puede dejar en blanco")
-    private String texto;
+    private String textoPregunta;
 
-    private String[] respuestas;
+    private String texto1Respuesta;
+    private String texto2Respuesta;
+    private String texto3Respuesta;
+    private String texto4Respuesta;
 
-
+    private int respuestaCorrecta;
 }
