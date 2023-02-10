@@ -69,6 +69,13 @@
 			<version>2.0.2</version>
 		</dependency>
 
+		<!-- ddbb -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 		<!-- testing & development: h2,devtools,security-test, selenium,assertj, -->
 		<dependency>
 			<groupId>com.h2database</groupId>

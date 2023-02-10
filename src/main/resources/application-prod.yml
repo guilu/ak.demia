@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOSTNAME:localhost}:${DB_PORT:3306}/${DB_SCHEMA:BDD_AKDEMIA}?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:secret}
+  sql:
+    init:
+      mode: never
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate #change to validate in production mode
+    properties:
+      hibernate:
+        dialect: "org.hibernate.dialect.MySQLDialect"
+        default_schema: ${DB_SCHEMA:BDD_AKDEMIA}
+  h2:
+    console:
+      enabled: false
+
+logging:
+  level:
+    com.diegobarrioh.akdemia: ERROR

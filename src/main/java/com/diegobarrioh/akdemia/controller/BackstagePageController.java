@@ -3,11 +3,14 @@ package com.diegobarrioh.akdemia.controller;
 import com.diegobarrioh.akdemia.controller.form.PreguntaForm;
 import com.diegobarrioh.akdemia.controller.form.TemaForm;
 import com.diegobarrioh.akdemia.domain.entity.Agrupacion;
+import com.diegobarrioh.akdemia.domain.entity.Pregunta;
 import com.diegobarrioh.akdemia.domain.entity.Tema;
 import com.diegobarrioh.akdemia.service.AgrupacionService;
+import com.diegobarrioh.akdemia.service.PreguntaService;
 import com.diegobarrioh.akdemia.service.TemaService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@Log4j2
 @Transactional
 @RequestMapping("/backstage")
 public class BackstagePageController {
@@ -24,9 +28,12 @@ public class BackstagePageController {
     private final AgrupacionService agrupacionService;
     private final TemaService temaService;
 
-    public BackstagePageController(AgrupacionService agrupacionService, TemaService temaService) {
+    private final PreguntaService preguntaService;
+
+    public BackstagePageController(AgrupacionService agrupacionService, TemaService temaService, PreguntaService preguntaService) {
         this.agrupacionService = agrupacionService;
         this.temaService = temaService;
+        this.preguntaService = preguntaService;
     }
 
     @GetMapping(value={"/",""})
@@ -36,6 +43,7 @@ public class BackstagePageController {
 
     @GetMapping("/new-agrupacion")
     public String newAgrupacionPage(Model model) {
+        model.addAttribute("agrupaciones", agrupacionService.getAgrupacionesAlphabetically());
         model.addAttribute("agrupacion",new Agrupacion());
 
         return "backstage/agrupacion";
@@ -45,6 +53,7 @@ public class BackstagePageController {
     public String newAgrupacionSubmit(@ModelAttribute Agrupacion agrupacion, Model model) {
         model.addAttribute("agrupacion",agrupacionService.save(agrupacion));
 
+        model.addAttribute("agrupaciones", agrupacionService.getAgrupacionesAlphabetically());
         return "backstage/agrupacion";
     }
 
@@ -72,10 +81,24 @@ public class BackstagePageController {
 
     @GetMapping("/new-pregunta")
     public String nuevaPreguntaForm(Model model){
-
+        model.addAttribute("temas",temaService.getTemas());
         model.addAttribute("preguntaForm",new PreguntaForm());
         return "backstage/pregunta";
 
     }
 
+    @PostMapping("/new-pregunta")
+    public String nuevaPreguntaSubmit(@Valid PreguntaForm preguntaForm, BindingResult bindingResult, Model model) {
+
+        log.info("La pregunta a insertar {}",preguntaForm.toString());
+        Pregunta pregunta = preguntaService.getPreguntaFrom(preguntaForm);
+        Tema tema = temaService.getTema(preguntaForm.getIdTema());
+        pregunta.setTema(tema);
+
+        preguntaService.save(pregunta);
+
+        model.addAttribute("temas",temaService.getTemas());
+        model.addAttribute("preguntaForm",new PreguntaForm());
+        return "backstage/pregunta";
+    }
 }

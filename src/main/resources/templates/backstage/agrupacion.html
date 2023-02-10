@@ -19,6 +19,18 @@
   <li>
     <a th:href="@{/backstage/new-tema}" th:text="#{backstage.tema}">Mantener Temas</a>
   </li>
+  <li>
+    <a th:href="@{/backstage/new-pregunta}" th:text="#{backstage.pregunta}">Mantener Temas</a>
+  </li>
+
+</ul>
+
+
+<h2>lista agrupaciones</h2>
+
+<!--/*@thymesVar id="agrupaciones" type="com.diegobarrioh.akdemia.domain.entity.Agrupacion"*/-->
+<ul th:each="agrupacion: ${agrupaciones}">
+  <li th:text="${agrupacion.texto}"></li>
 </ul>
 
 
@@ -32,6 +44,19 @@
   <button type="submit" th:text="#{submit.guardar}">guardar</button>
 
 </form>
+
+<script lang="javascript">
+
+    window.addEventListener("DOMContentLoaded", function() {
+
+        console.log("DOMContentLoaded");
+        fetch('/api/v1/agrupaciones')
+            .then((response) => response.json())
+            .then( (data) => console.log(data._embedded.agrupacionList) );
+
+    });
+
+</script>
 
 </body>
 </html>
