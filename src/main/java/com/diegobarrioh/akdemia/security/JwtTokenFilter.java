@@ -85,7 +85,7 @@ public class JwtTokenFilter extends GenericFilterBean {
     private void manageTokenAuthentication( HttpServletRequest httpServletRequest) {
         String token = resolveToken(httpServletRequest);
         if (StringUtils.hasLength(token)) {
-            CustomTokenAuthentication authenticationToken = new CustomTokenAuthen tication(token);
+            CustomTokenAuthentication authenticationToken = new CustomTokenAuthentication(token);
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
