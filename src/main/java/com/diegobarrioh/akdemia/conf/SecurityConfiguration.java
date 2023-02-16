@@ -1,18 +1,33 @@
 package com.diegobarrioh.akdemia.conf;
 
+import com.diegobarrioh.akdemia.security.JwtTokenFilter;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
 @Log4j2
 public class SecurityConfiguration {
+
+   @Bean
+   public AuthenticationProvider authenticationManager(){
+
+   }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -31,10 +46,15 @@ public class SecurityConfiguration {
                 .logout(logout -> logout
                         .permitAll()
                         .logoutSuccessUrl("/?logout")
-                );
-
-        http.csrf().disable();
-        http.headers().frameOptions().sameOrigin();
+                )
+        //disable CSRF (cross site request forgery)
+                .csrf().disable()
+                .headers().frameOptions().sameOrigin()
+        //no session will be created or used by spring security
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+         //apply JWT
+                .addFilter(new JwtTokenFilter(authenticationManager));
 
         // @formatter:on
         return http.build();
