@@ -9,6 +9,7 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -28,10 +29,10 @@ public class JwtTokenFilter extends GenericFilterBean {
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String TOKEN_TYPE = "Bearer ";
 
+    @Autowired
     private AuthenticationManager authenticationManager;
 
-    public JwtTokenFilter(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
+    public JwtTokenFilter() {
     }
 
     @Override

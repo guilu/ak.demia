@@ -10,8 +10,8 @@ public class ApiKeyPrincipal extends CustomPrincipal {
     public ApiKeyPrincipal(String username, Collection<? extends GrantedAuthority> authorities, String descripcion) {
         super(username,null, authorities);
         setFullname(descripcion);
-        customer = SecurityUtils.authoritiesContainsRole(getAuthorities(), "ROLE_CUSTOMER");
-        agent = SecurityUtils.authoritiesContainsRole(getAuthorities(), "ROLE_AGENT");
+        this.customer = SecurityUtils.authoritiesContainsRole(getAuthorities(), "ROLE_CUSTOMER");
+        this.agent = SecurityUtils.authoritiesContainsRole(getAuthorities(), "ROLE_AGENT");
 
     }
 }

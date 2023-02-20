@@ -6,13 +6,14 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 
+
 public abstract class CustomPrincipal extends User {
 
     private String fullname;
-    private final boolean customer;
-    private final boolean agent;
+    boolean customer;
+    boolean agent;
 
-    protected CustomPrincipal(String username, Collection<? extends GrantedAuthority> authorities) {
+    protected CustomPrincipal(String username, Collection<? extends GrantedAuthority> authorities, Collection<? extends GrantedAuthority> grantedAuthorities) {
         super(username,"",authorities);
         customer = SecurityUtils.authoritiesContainsRole(getAuthorities(),"ROLE_CUSTOMER");
         agent = SecurityUtils.authoritiesContainsRole(getAuthorities(),"ROLE_AGENT");
