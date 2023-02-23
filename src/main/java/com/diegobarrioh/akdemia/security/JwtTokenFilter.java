@@ -18,36 +18,27 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.naming.AuthenticationException;
 import java.io.IOException;
 
 @Component
-public class JwtTokenFilter extends GenericFilterBean {
+public class JwtTokenFilter extends OncePerRequestFilter {
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String TOKEN_TYPE = "Bearer ";
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    public JwtTokenFilter() {
-    }
-
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-            throws IOException, ServletException {
-        HttpServletRequest httpServletRequest  = asHttp(servletRequest);
-        HttpServletResponse httpServletResponse = asHttp(servletResponse);
-
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
         try {
-            manageTokenAuthentication(httpServletRequest);
-            filterChain.doFilter(servletRequest, servletResponse);
-        } catch (BadCredentialsException | AuthenticationException bce) {
-            sendError(httpServletResponse, HttpStatus.UNAUTHORIZED, bce.getMessage());
+            manageTokenAuthentication(request);
+            filterChain.doFilter(request, response);
+        } catch (BadCredentialsException  bce) {
+            sendError(response, HttpStatus.UNAUTHORIZED, bce.getMessage());
         } catch (CredentialsExpiredException cee) {
-            sendError(httpServletResponse, HttpStatus.FORBIDDEN, cee.getMessage());
+            sendError(response, HttpStatus.FORBIDDEN, cee.getMessage());
         }
     }
 
@@ -86,9 +77,7 @@ public class JwtTokenFilter extends GenericFilterBean {
     private void manageTokenAuthentication( HttpServletRequest httpServletRequest) {
         String token = resolveToken(httpServletRequest);
         if (StringUtils.hasLength(token)) {
-            CustomTokenAuthentication authenticationToken = new CustomTokenAuthentication(token);
-            Authentication authentication = authenticationManager.authenticate(authenticationToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            SecurityContextHolder.getContext().setAuthentication(new CustomTokenAuthentication(token));
         }
     }
 

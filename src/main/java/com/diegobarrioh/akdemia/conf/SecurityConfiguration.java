@@ -26,17 +26,20 @@ public class SecurityConfiguration {
         log.debug("securityFilterChain:");
 
         // @formatter:off
-        http
-                .authorizeHttpRequests( authorize -> authorize
-                        .requestMatchers("/","/register","/user/register","/register-complete","/h2-console/**","/api/v1/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .permitAll()
-                )
+        return http
+                .authorizeHttpRequests( authorize -> {
+                            authorize.requestMatchers("/").permitAll();
+                            authorize.requestMatchers("/register").permitAll();
+                            authorize.requestMatchers("/user/register").permitAll();
+                            authorize.requestMatchers("/register-complete").permitAll();
+                            authorize.requestMatchers("/api/v1/**").permitAll();
+                            authorize.requestMatchers("/h2-console/**").permitAll();
+                            authorize.anyRequest().authenticated();
+                        })
+                .formLogin(form -> {
+                            form.loginPage("/login");
+                        })
                 .logout(logout -> logout
-                        .permitAll()
                         .logoutSuccessUrl("/?logout")
                 )
         //disable CSRF (cross site request forgery)
@@ -47,10 +50,9 @@ public class SecurityConfiguration {
                 .and()
          //apply JWT
                 .addFilter(new JwtTokenFilter())
-                .authenticationProvider(apiKeyService);
+                .build();
 
         // @formatter:on
-        return http.build();
     }
 
     @Bean
