@@ -12,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
@@ -35,22 +36,18 @@ public class SecurityConfiguration {
                             authorize.requestMatchers("/register-complete").permitAll();
                             authorize.requestMatchers("/api/v1/**").permitAll();
                             authorize.requestMatchers("/h2-console/**").permitAll();
+                            authorize.requestMatchers("/login").permitAll();
                             authorize.anyRequest().authenticated();
                         })
-                .formLogin(form -> {
-                            form.loginPage("/login");
-                        })
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/?logout")
+                .formLogin(form -> form.loginPage("/login"))
+                .logout(logout -> logout.logoutSuccessUrl("/?logout")
                 )
         //disable CSRF (cross site request forgery)
                 .csrf().disable()
                 .headers().frameOptions().sameOrigin()
-        //no session will be created or used by spring security
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
          //apply JWT
-                .addFilterBefore(new JwtTokenFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(new JwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
 
         // @formatter:on
