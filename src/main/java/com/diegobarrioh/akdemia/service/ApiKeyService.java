@@ -28,7 +28,7 @@ public class ApiKeyService {
         for (Role role : apiKey.getRoles()) {
             sgas.add(new SimpleGrantedAuthority(role.getName().trim()));
         }
-        return new ApiKeyPrincipal(apiKey.getKey(), sgas, "");
+        return new ApiKeyPrincipal(apiKey.getKeyValue(), sgas, "");
 
     }
 

@@ -18,10 +18,10 @@ import java.util.List;
 @ToString
 public class ApiKey extends BaseEntity {
 
-    private String key;
+    private String keyValue;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = DomainModelNames.TB00_USER_ROLE,
+    @JoinTable(name = DomainModelNames.TB00_APIKEY_ROLE,
             schema = DomainModelNames.SCHEMA,
             joinColumns = @JoinColumn(name = "ID_APIKEY", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "ID_ROLE", referencedColumnName = "id"))

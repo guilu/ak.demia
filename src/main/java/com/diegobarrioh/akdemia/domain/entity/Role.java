@@ -26,6 +26,13 @@ public class Role extends BaseEntity {
     private Collection<User> users;
 
     /**
+     * The apikeys
+     */
+    @ManyToMany(mappedBy = "roles")
+    @ToString.Exclude
+    private Collection<ApiKey> apikeys;
+
+    /**
      * The privileges.
      */
     @ManyToMany(fetch = FetchType.EAGER)
