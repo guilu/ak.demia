@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <meta charset="UTF-8">
+  <title>listado temas</title>
+</head>
+<body>
+
+<!--/*@thymesVar id="temas" type="com.diegobarrioh.akdemia.domain.entity.Tema"*/-->
+<div th:if="${#lists.isEmpty(temas)}">
+  La lista está vacía
+</div>
+<div th:each="tema: ${temas}">
+  <div th:text="${tema.texto}"></div>
+</div>
+
+</body>
+</html>

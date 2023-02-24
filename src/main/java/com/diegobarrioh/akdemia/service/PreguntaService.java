@@ -43,4 +43,8 @@ public class PreguntaService {
 
         return pregunta;
     }
+
+    public List<Pregunta> getPreguntas() {
+        return this.preguntaRepository.findAll();
+    }
 }

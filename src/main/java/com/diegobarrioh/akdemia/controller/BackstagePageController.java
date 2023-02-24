@@ -101,4 +101,25 @@ public class BackstagePageController {
         model.addAttribute("preguntaForm",new PreguntaForm());
         return "backstage/pregunta";
     }
+
+
+
+    @GetMapping("/agrupaciones")
+    public String agrupaciones(Model model) {
+        model.addAttribute("agrupaciones", agrupacionService.getAgrupacionesAlphabetically());
+        return "backstage/agrupaciones";
+    }
+    @GetMapping("/temas")
+    public String temas(Model model) {
+        model.addAttribute("temas", temaService.getTemas());
+        return "backstage/temas";
+    }
+
+    @GetMapping("/preguntas")
+    public String preguntas(Model model) {
+        model.addAttribute("preguntas", preguntaService.getPreguntas());
+        return "backstage/preguntas";
+    }
+
+
 }
