@@ -32,4 +32,7 @@ public class ApiKeyService {
 
     }
 
+    public ApiKey getByApikeyValue(String apiKey) {
+        return this.apiKeyRepository.findByKeyValue(apiKey);
+    }
 }

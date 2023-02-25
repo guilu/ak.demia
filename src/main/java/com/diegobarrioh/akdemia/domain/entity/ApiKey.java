@@ -6,7 +6,6 @@ import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Collection;
-import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -19,6 +18,8 @@ import java.util.List;
 public class ApiKey extends BaseEntity {
 
     private String keyValue;
+
+    private String name;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = DomainModelNames.TB00_APIKEY_ROLE,

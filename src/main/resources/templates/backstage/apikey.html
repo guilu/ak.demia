@@ -1,0 +1,16 @@
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <meta charset="UTF-8">
+  <title>apikey token</title>
+</head>
+<body>
+
+<form id="apiKeyForm" th:action="@{/apiKey}" method="post">
+  <label for="apiKey"></label>
+  <input type="text" name="apiKey" id="apiKey" value="">
+  <input type="submit" value="Enviar">
+</form>
+
+</body>
+</html>

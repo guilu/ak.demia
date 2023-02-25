@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ApiKeyRepository extends CrudRepository<ApiKey, String> {
+
+    ApiKey findByKeyValue(String apikeyvalue);
+
 }
