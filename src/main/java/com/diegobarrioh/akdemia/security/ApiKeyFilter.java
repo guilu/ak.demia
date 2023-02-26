@@ -31,8 +31,6 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 
 
         String apiKey = request.getParameter("apikey");
-        log.info("apikey provided: {}", apiKey);
-
         if (apiKey == null) {
             filterChain.doFilter(request,response);
         } else {

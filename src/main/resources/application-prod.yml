@@ -10,14 +10,22 @@ spring:
     show-sql: false
     hibernate:
       ddl-auto: validate #change to validate in production mode
+    generate-ddl: true #change to false in production mode
     properties:
       hibernate:
         dialect: "org.hibernate.dialect.MySQLDialect"
         default_schema: ${DB_SCHEMA:BDD_AKDEMIA}
-  h2:
-    console:
-      enabled: false
+
+
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
 
 logging:
   level:
     com.diegobarrioh.akdemia: DEBUG
+
+storage:
+  location: '/Users/diegobarrioh/code/java/ak.demia/src/main/resources/upload-dir'
