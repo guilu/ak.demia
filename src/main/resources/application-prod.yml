@@ -20,4 +20,4 @@ spring:
 
 logging:
   level:
-    com.diegobarrioh.akdemia: ERROR
+    com.diegobarrioh.akdemia: DEBUG

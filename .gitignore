@@ -130,3 +130,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+## I don't want to save documentation and tests
+*.pdf

@@ -25,8 +25,6 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        log.debug("securityFilterChain:");
-
         // @formatter:off
         return http
                 .authorizeHttpRequests( authorize -> {
@@ -41,7 +39,7 @@ public class SecurityConfiguration {
                         })
                 .formLogin(form -> form.loginPage("/login"))
                 .logout(logout -> logout.logoutSuccessUrl("/?logout"))
-                .addFilterBefore(new ApiKeyFilter(apiKeyService),UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new ApiKeyFilter(apiKeyService),UsernamePasswordAuthenticationFilter.class)
                 .build();
         // @formatter:on
     }

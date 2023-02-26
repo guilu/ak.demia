@@ -4,10 +4,8 @@ import com.diegobarrioh.akdemia.domain.entity.ApiKey;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 public class ApiKeyAuthentication implements Authentication {
 
