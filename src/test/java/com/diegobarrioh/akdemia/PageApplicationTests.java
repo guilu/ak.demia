@@ -58,7 +58,7 @@ class PageApplicationTests {
     void errorPerformingLogin() {
         indexPage.goToIndexPage(url()).goToLoginPage();
         loginPage
-                .login("user@gmail.com","1234")
+                .login("user@gmail.com","12345566")
                 .verifyPasswordErrorMessage("Username and/or password erróneo.");
     }
 
@@ -67,7 +67,7 @@ class PageApplicationTests {
         indexPage.goToIndexPage(url()).goToLoginPage();
         loginPage.login("user@gmail.com","1234");
         indexPage.gotToLogoutPage();
-        //logoutPage.confirmLogout();
+        logoutPage.confirmLogout();
         indexPage.iJustLoggedOut();
     }
 

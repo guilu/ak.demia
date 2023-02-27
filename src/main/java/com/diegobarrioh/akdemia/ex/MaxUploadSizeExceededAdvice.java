@@ -3,7 +3,6 @@ package com.diegobarrioh.akdemia.ex;
 import com.diegobarrioh.akdemia.controller.FileUploadController;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
